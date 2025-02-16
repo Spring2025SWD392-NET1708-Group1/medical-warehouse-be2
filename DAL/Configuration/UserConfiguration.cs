@@ -1,30 +1,45 @@
+using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using DAL.Entities;
-namespace DAL.Configuration
+
+namespace DAL.Configurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("Users");
             builder.HasKey(u => u.Id);
-            builder.Property(u => u.Name)
-                   .IsRequired()
-                   .HasMaxLength(100);
+
+            builder.Property(u => u.FullName)
+                .IsRequired()
+                .HasMaxLength(100);
+
             builder.Property(u => u.Email)
-                   .IsRequired()
-                   .HasMaxLength(150);
-            builder.HasIndex(u => u.Email).IsUnique();
-            // Relationships (One-to-Many: User -> Role)
-            builder.HasMany(u => u.Role)
-                   .WithOne(o => o.User)
-                   .HasForeignKey(o => o.RoleID)
-                   .OnDelete(DeleteBehavior.Cascade);
-            builder.HasData(
-                new User { Id = 1, Name = "Huy", Email = "huy12@gmail.com" },
-                new User { Id = 2, Name = "Khoi", Email = "khoi12@gmail.com" }
-                );
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(u => u.PasswordHash)
+                .IsRequired();
+
+            builder.HasOne(u => u.Role)
+                .WithMany(r => r.Users)
+                .HasForeignKey(u => u.RoleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(u => u.Orders)
+                .WithOne(o => o.User)
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Seed Data
+            builder.HasData(new User
+            {
+                Id = 1,
+                FullName = "xhuyz",
+                Email = "admin@example.com",
+                PasswordHash = "12345",
+                RoleId = 1
+            });
         }
     }
 }

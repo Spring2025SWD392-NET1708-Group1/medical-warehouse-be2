@@ -1,22 +1,28 @@
-using Microsoft.EntityFrameworkCore;
+using DAL.Configurations;
 using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Context
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<User> Users { get; set; } = null!;
-        public DbSet<Role> Products { get; set; } = null!;
-        // Constructor accepting DbContextOptions
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-        // OnModelCreating method to apply configurations
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemCategory> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Apply all configurations from the assembly
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new ItemConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
         }
     }
 }
-
