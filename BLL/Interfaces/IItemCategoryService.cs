@@ -2,7 +2,7 @@ using BLL.DTOs;
 
 namespace BLL.Interfaces
 {
-    public interface ICategoryService
+    public interface IItemCategoryService
     {
         Task<IEnumerable<ItemCategoryDTO>> GetAllCategoriesAsync();
         Task<ItemCategoryDTO?> GetCategoryByIdAsync(int id);
