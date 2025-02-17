@@ -1,0 +1,77 @@
+﻿# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.csproj.user
+*.sln.cache
+*.sln.docstates
+
+# Build files
+bin/
+obj/
+out/
+*.exe
+*.dll
+*.pdb
+*.appx
+*.appxbundle
+*.msix
+*.msixbundle
+*.vsix
+
+# User-specific files
+*.userosscache
+*.userprefs
+*.sln.ide
+*.suo
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+project.lock.json
+project.assets.json
+
+# Entity Framework Migrations
+Migrations/
+**/Migrations/
+
+# Database files
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# Logs
+*.log
+logs/
+Debug/
+trace.log
+
+# Secrets & Config
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+.env
+*.ps1
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# Resharper
+_ReSharper.Caches/
+*.DotSettings.user
+
+# MacOS
+.DS_Store
+
+# Linux
+*.pid
+
+# Windows
+Thumbs.db
+desktop.ini
+/API/.filenesting.json
