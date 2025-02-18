@@ -1,4 +1,4 @@
-using DAL.Enums;
+using Common.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Entities
@@ -6,7 +6,7 @@ namespace DAL.Entities
     public class Order
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public int UserId { get; set; }
         public DateTime OrderDate { get; set; }
         public OrderStatus Status { get; set; }

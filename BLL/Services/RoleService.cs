@@ -32,9 +32,9 @@ namespace BLL.Services
 
         }
 
-        public async Task<bool> DeleteRoleAsync(int id)
+        public async Task<bool> DeleteRoleAsync(Guid id)
         {
-            var role = await _context.Roles.FindAsync(id);
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == id);
             if (role == null) return false;
             _context.Roles.Remove(role);
             await _context.SaveChangesAsync();
@@ -47,15 +47,15 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<RoleDTO>>(roles);
         }
 
-        public async Task<RoleDTO?> GetRoleByIdAsync(int id)
+        public async Task<RoleDTO?> GetRoleByIdAsync(Guid id)
         {
-            var role = await _context.Roles.FindAsync(id);
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == id);
             return _mapper.Map<RoleDTO>(role);
         }
 
-        public async Task<bool> UpdateRoleAsync(int id, RoleDTO roleDTO)
+        public async Task<bool> UpdateRoleAsync(Guid id, RoleDTO roleDTO)
         {
-            var role = await _context.Roles.FindAsync(id);
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == id);
             if (role == null) return false;
             _mapper.Map<Role>(roleDTO);
             await _context.SaveChangesAsync();

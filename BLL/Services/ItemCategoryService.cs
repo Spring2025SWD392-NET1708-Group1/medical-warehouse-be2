@@ -26,14 +26,16 @@ namespace BLL.Services
         public async Task<ItemCategoryDTO> CreateCategoryAsync(ItemCategoryDTO itemcategoryDTO)
         {
             var category = _mapper.Map<ItemCategory>(itemcategoryDTO);
+            category.Id = Guid.NewGuid();
+
             await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync();
             return _mapper.Map<ItemCategoryDTO>(category);
         }
 
-        public async Task<bool> DeleteCategoryAsync(int id)
+        public async Task<bool> DeleteCategoryAsync(Guid id)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
             if (category == null) return false;
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
@@ -46,15 +48,15 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<ItemCategoryDTO>>(categories);
         }
 
-        public async Task<ItemCategoryDTO?> GetCategoryByIdAsync(int id)
+        public async Task<ItemCategoryDTO?> GetCategoryByIdAsync(Guid id)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
             return _mapper?.Map<ItemCategoryDTO?>(category);
         }
 
-        public async Task<bool> UpdateCategoryAsync(int id, ItemCategoryDTO itemcategoryDTO)
+        public async Task<bool> UpdateCategoryAsync(Guid id, ItemCategoryDTO itemcategoryDTO)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
             if (category == null) return false;
             _mapper.Map<ItemCategoryDTO> (category);
             await _context.SaveChangesAsync();

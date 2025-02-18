@@ -32,14 +32,16 @@ namespace DAL.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Seed Data
-            builder.HasData(new User
-            {
-                Id = 1,
-                FullName = "xhuyz",
-                Email = "admin@example.com",
-                PasswordHash = "12345",
-                RoleId = 1
-            });
+            builder.HasData(
+                new User
+                {
+                    Id = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8fc"),
+                    FullName = "xhuyz",
+                    Email = "admin@example.com",
+                    PasswordHash = "12345",
+                    RoleId = Guid.Parse("a3c27f19-e401-46d0-b404-99fa35744e9e") // Assuming RoleId is a Guid
+                }
+            );
         }
     }
 }

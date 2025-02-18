@@ -5,9 +5,9 @@ namespace BLL.Interfaces
     public interface IUserService
     {
         Task<IEnumerable<UserDTO>> GetAllUsersAsync();
-        Task<UserDTO?> GetUserByIdAsync(int id);
+        Task<UserDTO?> GetUserByIdAsync(Guid id);
         Task<UserDTO> CreateUserAsync(UserDTO userDTO);
-        Task<bool> UpdateUserAsync(int id, UserDTO userDTO);
-        Task<bool> DeleteUserAsync(int id);
+        Task<bool> UpdateUserAsync(Guid id, UserDTO userDTO);
+        Task<bool> DeleteUserAsync(Guid id);
     }
 }

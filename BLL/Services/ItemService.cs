@@ -24,15 +24,16 @@ namespace BLL.Services
         public async Task<ItemDTO> CreateItemAsync(ItemDTO itemDTO)
         {
             var item = _mapper.Map<Item>(itemDTO);
+
             await _context.Items.AddAsync(item);
             await _context.SaveChangesAsync();
             return _mapper.Map<ItemDTO>(item);
         }
 
-        public async Task<bool> DeleteItemAsync(int id)
+        public async Task<bool> DeleteItemAsync(Guid id)
         {
-            var item = await _context.Items.FindAsync(id);
-            if(item == null) return false;
+            var item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id);
+            if (item == null) return false;
             _context.Items.Remove(item);
             await _context.SaveChangesAsync();
             return true;
@@ -44,13 +45,13 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<ItemDTO>>(items);
         }
 
-        public async Task<ItemDTO?> GetItemByIdAsync(int id)
+        public async Task<ItemDTO?> GetItemByIdAsync(Guid id)
         {
             var item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id);
             return _mapper.Map<ItemDTO?>(item);
         }
 
-        public async Task<bool> UpdateItemAsync(int id, ItemDTO itemDTO)
+        public async Task<bool> UpdateItemAsync(Guid id, ItemDTO itemDTO)
         {
             var item = await _context.Items.FirstOrDefaultAsync(x =>x.Id == id);
             if(item == null) return false;

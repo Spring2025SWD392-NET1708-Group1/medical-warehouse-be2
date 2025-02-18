@@ -1,4 +1,5 @@
 using DAL.Entities;
+using Common.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -24,8 +25,15 @@ namespace DAL.Configurations
 
             // Seed Data
             builder.HasData(
-                new Order { Id = 1, UserId = 1, OrderDate = DateTime.UtcNow, Status = "Pending" }
+                new Order
+                {
+                    Id = Guid.Parse("d9b4f38f-e9d4-4d2c-a479-746c16a6c697"),
+                    UserId = 1,
+                    OrderDate = DateTime.UtcNow,
+                    Status = OrderStatus.Pending
+                }
             );
+
         }
     }
 }

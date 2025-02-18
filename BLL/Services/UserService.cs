@@ -24,7 +24,7 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<UserDTO>>(users); // AutoMapper replaces manual mapping
         }
 
-        public async Task<UserDTO?> GetUserByIdAsync(int id)
+        public async Task<UserDTO?> GetUserByIdAsync(Guid id)
         {
             var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
             return _mapper.Map<UserDTO>(user);
@@ -38,22 +38,22 @@ namespace BLL.Services
             return _mapper.Map<UserDTO>(userEntity);
         }
 
-        public async Task<bool> UpdateUserAsync(int id, UserDTO userDTO)
+        public async Task<bool> UpdateUserAsync(Guid id, UserDTO userDTO)
         {
-            var userEntity = await _context.Users.FindAsync(id);
-            if (userEntity == null) return false;
+            var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null) return false;
 
-            _mapper.Map(userDTO, userEntity); // AutoMapper updates entity fields
+            _mapper.Map(userDTO, user); // AutoMapper updates entity fields
             await _context.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> DeleteUserAsync(int id)
+        public async Task<bool> DeleteUserAsync(Guid id)
         {
-            var userEntity = await _context.Users.FindAsync(id);
-            if (userEntity == null) return false;
+            var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null) return false;
 
-            _context.Users.Remove(userEntity);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return true;
         }
