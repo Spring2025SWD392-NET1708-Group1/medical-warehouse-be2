@@ -8,16 +8,62 @@ namespace BLL.Mappers
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserDTO>()
-                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.Name))
-                .ReverseMap()
-                .ForMember(dest => dest.Role, opt => opt.Ignore());
+            // Create mapping
+            CreateMap<UserCreateDTO, User>()
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore()); // Hashing should be done before saving
 
-            CreateMap<Role, RoleDTO>().ReverseMap();
-            CreateMap<Item, ItemDTO>().ReverseMap();
-            CreateMap<ItemCategory, ItemCategoryDTO>().ReverseMap();
-            CreateMap<Order, OrderDTO>().ReverseMap();
-            CreateMap<OrderDetail, OrderDetailDTO>().ReverseMap();
+            // Update mapping (only map non-null values)
+            CreateMap<UserUpdateDTO, User>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
+                    srcMember != null));
+
+            // View mapping (fetch related RoleName)
+            CreateMap<User, UserViewDTO>()
+                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name));
+
+            CreateMap<Role, RoleDTO>()
+                .ReverseMap()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
+                    srcMember != null));
+
+            CreateMap<ItemCreateDTO, Item>();
+
+            CreateMap<ItemUpdateDTO, Item>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
+                    srcMember != null));
+
+            CreateMap<Item, ItemViewDTO>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.ItemCategory.Name));
+
+            CreateMap<ItemCategory, ItemCategoryDTO>()
+                .ReverseMap()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
+                    srcMember != null));
+
+            CreateMap<Order, OrderDTO>()
+                .ReverseMap()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
+                    srcMember != null));
+
+            CreateMap<OrderDetailCreateDTO, OrderDetail>();
+
+            CreateMap<OrderDetailUpdateDTO, OrderDetail>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
+                    srcMember != null));
+
+            CreateMap<OrderDetail, OrderDetailViewDTO>()
+                .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => src.Order.OrderDate))
+                .ForMember(dest => dest.ItemName, opt => opt.MapFrom(src => src.Item.Name));
+
+            CreateMap<SubmissionCreateDTO, Submission>();
+
+            CreateMap<SubmissionUpdateDTO, Submission>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
+                    srcMember != null));
+
+            CreateMap<Submission, SubmissionViewDTO>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
+                .ForMember(dest => dest.SubmittedAt, opt => opt.MapFrom(src => src.CreatedDate));
         }
     }
 }
