@@ -1,7 +1,10 @@
 using BLL.Interfaces;
+using BLL.Mappers;
 using BLL.Services;
+using DAL.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
@@ -57,6 +60,7 @@ namespace API
     });
             });
 
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             //Dependency Injection
             builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
             builder.Services.AddScoped<IItemService, ItemService>();
@@ -65,6 +69,10 @@ namespace API
             builder.Services.AddScoped<IRoleService, RoleService>();
             builder.Services.AddScoped<ISubmissionService, SubmissionService>();
             builder.Services.AddScoped<IUserService, UserService>();
+
+            var connectionString = (builder.Configuration.GetConnectionString("DefaultConnection"));
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), b => b.MigrationsAssembly("DAL")));
 
             // 🔹 Add services to the container
             builder.Services.AddControllers();
