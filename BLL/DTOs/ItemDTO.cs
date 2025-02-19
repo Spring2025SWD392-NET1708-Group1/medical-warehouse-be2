@@ -10,7 +10,7 @@ namespace BLL.DTOs
         public string Description { get; set; } = string.Empty;
 
         [Required]
-        public int CategoryId { get; set; } // Category reference for creation
+        public Guid CategoryId { get; set; } // Category reference for creation
 
         [Required]
         [Range(0, int.MaxValue)]
@@ -33,7 +33,7 @@ namespace BLL.DTOs
 
         public string? Description { get; set; }
 
-        public int? CategoryId { get; set; } // Nullable, so updates can be partial
+        public Guid? CategoryId { get; set; } // Nullable, so updates can be partial
 
         public int? Quantity { get; set; }
 

@@ -28,7 +28,7 @@ namespace DAL.Configurations
                 new Order
                 {
                     Id = Guid.Parse("d9b4f38f-e9d4-4d2c-a479-746c16a6c697"),
-                    UserId = 1,
+                    UserId = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8fc"),
                     OrderDate = DateTime.UtcNow,
                     Status = OrderStatus.Pending
                 }
