@@ -17,6 +17,8 @@ namespace DAL.Context
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Submission> Submissions { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<LotRequest> LotRequests { get; set; }
+        public DbSet<LotCategory> LotCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
