@@ -365,3 +365,4 @@ FodyWeavers.xsd
 # Migrations Folder
 /DAL/Migrations/*
 /API/.filenesting.json
+/DAL/Migrations/AppDbContextModelSnapshot.cs
