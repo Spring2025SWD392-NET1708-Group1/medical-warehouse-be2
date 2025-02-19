@@ -16,13 +16,13 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<UserViewDTO>>> GetAllUsers()
         {
             return Ok(await _userService.GetAllUsersAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDTO>> GetUserById(Guid id)
+        public async Task<ActionResult<UserViewDTO>> GetUserById(Guid id)
         {
             var user = await _userService.GetUserByIdAsync(id);
             if (user == null) return NotFound();
@@ -30,14 +30,14 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] UserDTO userDto)
+        public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO userDto)
         {
             var createdUser = await _userService.CreateUserAsync(userDto);
-            return CreatedAtAction(nameof(GetUserById), new { id = Guid.NewGuid() }, createdUser);
+            return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UserDTO userDto)
+        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UserUpdateDTO userDto)
         {
             var updatedUser = await _userService.UpdateUserAsync(id, userDto);
             if (updatedUser == false) return NotFound();
