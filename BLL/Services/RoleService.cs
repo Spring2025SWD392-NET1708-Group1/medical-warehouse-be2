@@ -26,6 +26,8 @@ namespace BLL.Services
         public async Task<RoleDTO> CreateRoleAsync(RoleDTO roleDTO)
         {
             var role = _mapper.Map<Role>(roleDTO);
+            role.Id = Guid.NewGuid();
+
             await _context.Roles.AddAsync(role);
             await _context.SaveChangesAsync();
             return _mapper.Map<RoleDTO>(role);

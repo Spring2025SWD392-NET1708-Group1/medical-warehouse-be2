@@ -18,27 +18,29 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserViewDTO>> GetAllUsersAsync()
         {
             var users = await _context.Users.Include(u => u.Role).ToListAsync();
-            return _mapper.Map<IEnumerable<UserDTO>>(users); // AutoMapper replaces manual mapping
+            return _mapper.Map<IEnumerable<UserViewDTO>>(users); // AutoMapper replaces manual mapping
         }
 
-        public async Task<UserDTO?> GetUserByIdAsync(Guid id)
+        public async Task<UserViewDTO?> GetUserByIdAsync(Guid id)
         {
             var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
-            return _mapper.Map<UserDTO>(user);
+            return _mapper.Map<UserViewDTO>(user);
         }
 
-        public async Task<UserDTO> CreateUserAsync(UserDTO userDTO)
+        public async Task<UserViewDTO> CreateUserAsync(UserCreateDTO userDTO)
         {
             var userEntity = _mapper.Map<User>(userDTO);
+            userEntity.Id = Guid.NewGuid();
+
             _context.Users.Add(userEntity);
             await _context.SaveChangesAsync();
-            return _mapper.Map<UserDTO>(userEntity);
+            return _mapper.Map<UserViewDTO>(userEntity);
         }
 
-        public async Task<bool> UpdateUserAsync(Guid id, UserDTO userDTO)
+        public async Task<bool> UpdateUserAsync(Guid id, UserUpdateDTO userDTO)
         {
             var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
             if (user == null) return false;

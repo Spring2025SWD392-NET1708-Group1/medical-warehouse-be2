@@ -33,7 +33,7 @@ namespace BLL.Services
         public async Task<OrderDTO> CreateOrderAsync(OrderDTO orderDTO)
         {
             var orderEntity = _mapper.Map<Order>(orderDTO);
-            _context.Orders.Add(orderEntity);
+            await _context.Orders.AddAsync(orderEntity);
             await _context.SaveChangesAsync();
             return _mapper.Map<OrderDTO>(orderEntity);
         }

@@ -21,13 +21,14 @@ namespace BLL.Services
             _context = context;
             _mapper = mapper;
         }
-        public async Task<ItemDTO> CreateItemAsync(ItemDTO itemDTO)
+        public async Task<ItemViewDTO> CreateItemAsync(ItemCreateDTO itemDTO)
         {
             var item = _mapper.Map<Item>(itemDTO);
+            item.Id = Guid.NewGuid();
 
             await _context.Items.AddAsync(item);
             await _context.SaveChangesAsync();
-            return _mapper.Map<ItemDTO>(item);
+            return _mapper.Map<ItemViewDTO>(item);
         }
 
         public async Task<bool> DeleteItemAsync(Guid id)
@@ -39,19 +40,19 @@ namespace BLL.Services
             return true;
         }
 
-        public async Task<IEnumerable<ItemDTO>> GetAllItemsAsync()
+        public async Task<IEnumerable<ItemViewDTO>> GetAllItemsAsync()
         {
             var items = await _context.Items.ToListAsync();
-            return _mapper.Map<IEnumerable<ItemDTO>>(items);
+            return _mapper.Map<IEnumerable<ItemViewDTO>>(items);
         }
 
-        public async Task<ItemDTO?> GetItemByIdAsync(Guid id)
+        public async Task<ItemViewDTO?> GetItemByIdAsync(Guid id)
         {
             var item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id);
-            return _mapper.Map<ItemDTO?>(item);
+            return item != null ? _mapper.Map<ItemViewDTO>(item) : null;
         }
 
-        public async Task<bool> UpdateItemAsync(Guid id, ItemDTO itemDTO)
+        public async Task<bool> UpdateItemAsync(Guid id, ItemUpdateDTO itemDTO)
         {
             var item = await _context.Items.FirstOrDefaultAsync(x =>x.Id == id);
             if(item == null) return false;
