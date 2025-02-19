@@ -16,8 +16,8 @@ namespace DAL.Configurations
 
             // Seed Data
             builder.HasData(
-                new ItemCategory { Id = 1, Name = "Medicine" },
-                new ItemCategory { Id = 2, Name = "Surgical Equipment" }
+                new ItemCategory { Id = Guid.Parse("aed8c311-739c-4264-83a1-8a5e8854c182"), Name = "Medicine" },
+                new ItemCategory { Id = Guid.Parse("b7c51ee8-f942-4492-98b7-877b5777cd21"), Name = "Surgical Equipment" }
             );
         }
     }

@@ -16,13 +16,13 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ItemDTO>>> GetAllItems()
+        public async Task<ActionResult<IEnumerable<ItemViewDTO>>> GetAllItems()
         {
             return Ok(await _itemService.GetAllItemsAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ItemDTO>> GetItemById(int id)
+        public async Task<ActionResult<ItemViewDTO>> GetItemById(Guid id)
         {
             var item = await _itemService.GetItemByIdAsync(id);
             if (item == null) return NotFound();
@@ -30,22 +30,22 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateItem([FromBody] ItemDTO itemDto)
+        public async Task<IActionResult> CreateItem([FromBody] ItemCreateDTO itemDto)
         {
             var createdItem = await _itemService.CreateItemAsync(itemDto);
             return CreatedAtAction(nameof(GetItemById), new { id = createdItem.Id }, createdItem);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateItem(int id, [FromBody] ItemDTO itemDto)
+        public async Task<IActionResult> UpdateItem(Guid id, [FromBody] ItemUpdateDTO itemDto)
         {
             var updatedItem = await _itemService.UpdateItemAsync(id, itemDto);
-            if (updatedItem == null) return NotFound();
+            if (updatedItem == false) return NotFound();
             return Ok(updatedItem);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteItem(int id)
+        public async Task<IActionResult> DeleteItem(Guid id)
         {
             var success = await _itemService.DeleteItemAsync(id);
             if (!success) return NotFound();

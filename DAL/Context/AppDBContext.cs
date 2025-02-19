@@ -1,3 +1,4 @@
+using DAL.Configuration;
 using DAL.Configurations;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,8 @@ namespace DAL.Context
         public DbSet<ItemCategory> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Submission> Submissions { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +26,8 @@ namespace DAL.Context
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new SubmissionConfiguration());
+            modelBuilder.ApplyConfiguration(new TransactionConfiguration());
         }
     }
 }

@@ -2,12 +2,12 @@ using BLL.DTOs;
 
 namespace BLL.Interfaces
 {
-    public interface ICategoryService
+    public interface IItemCategoryService
     {
         Task<IEnumerable<ItemCategoryDTO>> GetAllCategoriesAsync();
-        Task<ItemCategoryDTO?> GetCategoryByIdAsync(int id);
+        Task<ItemCategoryDTO?> GetCategoryByIdAsync(Guid id);
         Task<ItemCategoryDTO> CreateCategoryAsync(ItemCategoryDTO itemcategoryDTO);
-        Task<bool> UpdateCategoryAsync(int id, ItemCategoryDTO itemcategoryDTO);
-        Task<bool> DeleteCategoryAsync(int id);
+        Task<bool> UpdateCategoryAsync(Guid id, ItemCategoryDTO itemcategoryDTO);
+        Task<bool> DeleteCategoryAsync(Guid id);
     }
 }
