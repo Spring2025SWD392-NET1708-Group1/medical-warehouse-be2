@@ -365,4 +365,3 @@ FodyWeavers.xsd
 # Migrations Folder
 /DAL/Migrations/
 /API/.filenesting.json
-/BLL/BLL.csproj
