@@ -24,14 +24,12 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.Item", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -61,8 +59,8 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CategoryId = 1,
+                            Id = new Guid("80c0ac22-9f4d-478e-8fe1-f01b4e6727b0"),
+                            CategoryId = new Guid("aed8c311-739c-4264-83a1-8a5e8854c182"),
                             Description = "Pain reliever",
                             ExpiryDate = new DateTime(2026, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Paracetamol",
@@ -71,8 +69,8 @@ namespace DAL.Migrations
                         },
                         new
                         {
-                            Id = 2,
-                            CategoryId = 2,
+                            Id = new Guid("1bfe3b07-5419-4718-bed9-0439016c7f78"),
+                            CategoryId = new Guid("b7c51ee8-f942-4492-98b7-877b5777cd21"),
                             Description = "Disposable gloves",
                             ExpiryDate = new DateTime(2027, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Surgical Gloves",
@@ -83,11 +81,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.ItemCategory", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -101,34 +97,34 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("aed8c311-739c-4264-83a1-8a5e8854c182"),
                             Name = "Medicine"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("b7c51ee8-f942-4492-98b7-877b5777cd21"),
                             Name = "Surgical Equipment"
                         });
                 });
 
             modelBuilder.Entity("DAL.Entities.Order", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
+                    b.Property<int>("Status")
                         .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -139,26 +135,25 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            OrderDate = new DateTime(2025, 2, 16, 13, 37, 58, 125, DateTimeKind.Utc).AddTicks(3701),
-                            Status = "Pending",
-                            UserId = 1
+                            Id = new Guid("d9b4f38f-e9d4-4d2c-a479-746c16a6c697"),
+                            OrderDate = new DateTime(2025, 2, 20, 3, 44, 17, 297, DateTimeKind.Utc).AddTicks(1973),
+                            Status = 0,
+                            TotalPrice = 0m,
+                            UserId = new Guid("d8f0b849-d1a2-45d5-8a23-47772060c8fc")
                         });
                 });
 
             modelBuilder.Entity("DAL.Entities.OrderDetail", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("char(36)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -177,17 +172,17 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            ItemId = 1,
-                            OrderId = 1,
+                            Id = new Guid("5f1f6327-d2a7-46be-9b07-d5f6d5873501"),
+                            ItemId = new Guid("80c0ac22-9f4d-478e-8fe1-f01b4e6727b0"),
+                            OrderId = new Guid("d9b4f38f-e9d4-4d2c-a479-746c16a6c697"),
                             Price = 10.00m,
                             Quantity = 2
                         },
                         new
                         {
-                            Id = 2,
-                            ItemId = 2,
-                            OrderId = 1,
+                            Id = new Guid("b8f9e273-3838-4657-9c9b-1e56b4a09d6e"),
+                            ItemId = new Guid("1bfe3b07-5419-4718-bed9-0439016c7f78"),
+                            OrderId = new Guid("d9b4f38f-e9d4-4d2c-a479-746c16a6c697"),
                             Price = 50.00m,
                             Quantity = 5
                         });
@@ -195,11 +190,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.Role", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -213,43 +206,96 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("a3c27f19-e401-46d0-b404-99fa35744e9e"),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("9c157f3e-d3ac-43b8-93b0-15e3d7f40ec1"),
                             Name = "Staff"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("8bbdfc66-b6bb-4534-8c1c-c9a3b458ea3d"),
                             Name = "Customer"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = new Guid("09ac9b68-4b92-4f3b-b74e-2b1a5f6abf79"),
                             Name = "DeliveryUnit"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = new Guid("f8a8b1c9-24a1-484e-bb02-95b9601d4047"),
                             Name = "Supplier"
                         });
                 });
 
-            modelBuilder.Entity("DAL.Entities.User", b =>
+            modelBuilder.Entity("DAL.Entities.Submission", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Context")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Submissions");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Transaction", b =>
+                {
+                    b.Property<Guid>("TransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("TransactionNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("TransactionId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("DAL.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -260,8 +306,12 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -272,11 +322,13 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("d8f0b849-d1a2-45d5-8a23-47772060c8fc"),
                             Email = "admin@example.com",
+                            EmailConfirmed = false,
                             FullName = "xhuyz",
                             PasswordHash = "12345",
-                            RoleId = 1
+                            PhoneNumber = "",
+                            RoleId = new Guid("a3c27f19-e401-46d0-b404-99fa35744e9e")
                         });
                 });
 
@@ -317,6 +369,28 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Item");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Submission", b =>
+                {
+                    b.HasOne("DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Transaction", b =>
+                {
+                    b.HasOne("DAL.Entities.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Order");
                 });
