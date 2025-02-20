@@ -1,64 +1,61 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
 using BLL.Interfaces;
-using DAL.Context;
 using DAL.Entities;
-using Microsoft.EntityFrameworkCore;
+using DAL.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
 {
     public class ItemService : IItemService
     {
-        private readonly AppDbContext _context;
+        private readonly IItemRepository _itemRepository;
         private readonly IMapper _mapper;
-        public ItemService(AppDbContext context, IMapper mapper)
+
+        public ItemService(IItemRepository itemRepository, IMapper mapper)
         {
-            _context = context;
+            _itemRepository = itemRepository;
             _mapper = mapper;
         }
+
         public async Task<ItemViewDTO> CreateItemAsync(ItemCreateDTO itemDTO)
         {
             var item = _mapper.Map<Item>(itemDTO);
             item.Id = Guid.NewGuid();
 
-            await _context.Items.AddAsync(item);
-            await _context.SaveChangesAsync();
+            await _itemRepository.AddAsync(item);
             return _mapper.Map<ItemViewDTO>(item);
         }
 
         public async Task<bool> DeleteItemAsync(Guid id)
         {
-            var item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id);
+            var item = await _itemRepository.GetByIdAsync(id);
             if (item == null) return false;
-            _context.Items.Remove(item);
-            await _context.SaveChangesAsync();
+            await _itemRepository.DeleteAsync(id);
             return true;
         }
 
         public async Task<IEnumerable<ItemViewDTO>> GetAllItemsAsync()
         {
-            var items = await _context.Items.ToListAsync();
+            var items = await _itemRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<ItemViewDTO>>(items);
         }
 
         public async Task<ItemViewDTO?> GetItemByIdAsync(Guid id)
         {
-            var item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id);
+            var item = await _itemRepository.GetByIdAsync(id);
             return item != null ? _mapper.Map<ItemViewDTO>(item) : null;
         }
 
         public async Task<bool> UpdateItemAsync(Guid id, ItemUpdateDTO itemDTO)
         {
-            var item = await _context.Items.FirstOrDefaultAsync(x =>x.Id == id);
-            if(item == null) return false;
+            var item = await _itemRepository.GetByIdAsync(id);
+            if (item == null) return false;
 
             _mapper.Map(itemDTO, item);
-            await _context.SaveChangesAsync();
+            await _itemRepository.UpdateAsync(item);
             return true;
         }
     }
