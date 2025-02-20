@@ -65,12 +65,17 @@ namespace API
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             //Dependency Injection
             builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
+            builder.Services.AddScoped<IItemCategoryRepository, ItemCategoryRepository>();
             builder.Services.AddScoped<IItemService, ItemService>();
             builder.Services.AddScoped<IItemRepository, ItemRepository>();
             builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
+            builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IRoleService, RoleService>();
+            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
             builder.Services.AddScoped<ISubmissionService, SubmissionService>();
+            builder.Services.AddScoped<ISubmissionRepository, SubmissionRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
