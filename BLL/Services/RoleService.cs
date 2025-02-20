@@ -1,25 +1,22 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
 using BLL.Interfaces;
-using DAL.Context;
 using DAL.Entities;
-using Microsoft.EntityFrameworkCore;
+using DAL.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
 {
     public class RoleService : IRoleService
     {
-        private readonly AppDbContext _context;
+        private readonly IRoleRepository _roleRepository;
         private readonly IMapper _mapper;
 
-        public RoleService(AppDbContext context, IMapper mapper)
+        public RoleService(IRoleRepository roleRepository, IMapper mapper)
         {
-            _context = context;
+            _roleRepository = roleRepository;
             _mapper = mapper;
         }
 
@@ -28,39 +25,37 @@ namespace BLL.Services
             var role = _mapper.Map<Role>(roleDTO);
             role.Id = Guid.NewGuid();
 
-            await _context.Roles.AddAsync(role);
-            await _context.SaveChangesAsync();
+            await _roleRepository.AddAsync(role);
             return _mapper.Map<RoleDTO>(role);
-
         }
 
         public async Task<bool> DeleteRoleAsync(Guid id)
         {
-            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == id);
+            var role = await _roleRepository.GetByIdAsync(id);
             if (role == null) return false;
-            _context.Roles.Remove(role);
-            await _context.SaveChangesAsync();
+            await _roleRepository.DeleteAsync(id);
             return true;
         }
 
         public async Task<IEnumerable<RoleDTO>> GetAllRolesAsync()
         {
-            var roles = await _context.Roles.ToListAsync();
+            var roles = await _roleRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<RoleDTO>>(roles);
         }
 
         public async Task<RoleDTO?> GetRoleByIdAsync(Guid id)
         {
-            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == id);
-            return _mapper.Map<RoleDTO>(role);
+            var role = await _roleRepository.GetByIdAsync(id);
+            return role != null ? _mapper.Map<RoleDTO>(role) : null;
         }
 
         public async Task<bool> UpdateRoleAsync(Guid id, RoleDTO roleDTO)
         {
-            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == id);
+            var role = await _roleRepository.GetByIdAsync(id);
             if (role == null) return false;
-            _mapper.Map<Role>(roleDTO);
-            await _context.SaveChangesAsync();
+
+            _mapper.Map(roleDTO, role);
+            await _roleRepository.UpdateAsync(role);
             return true;
         }
     }
