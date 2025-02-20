@@ -1,25 +1,22 @@
 ﻿using AutoMapper;
-using DAL.Context;
+using BLL.DTOs;
 using BLL.Interfaces;
+using DAL.Entities;
+using DAL.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using BLL.DTOs;
-using DAL.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services
 {
     public class ItemCategoryService : IItemCategoryService
     {
-        private readonly AppDbContext _context;
+        private readonly IItemCategoryRepository _itemCategoryRepository;
         private readonly IMapper _mapper;
 
-        public ItemCategoryService(AppDbContext context, IMapper mapper)
+        public ItemCategoryService(IItemCategoryRepository itemCategoryRepository, IMapper mapper)
         {
-            _context = context; 
+            _itemCategoryRepository = itemCategoryRepository;
             _mapper = mapper;
         }
 
@@ -28,38 +25,37 @@ namespace BLL.Services
             var category = _mapper.Map<ItemCategory>(itemcategoryDTO);
             category.Id = Guid.NewGuid();
 
-            await _context.Categories.AddAsync(category);
-            await _context.SaveChangesAsync();
+            await _itemCategoryRepository.AddAsync(category);
             return _mapper.Map<ItemCategoryDTO>(category);
         }
 
         public async Task<bool> DeleteCategoryAsync(Guid id)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _itemCategoryRepository.GetByIdAsync(id);
             if (category == null) return false;
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            await _itemCategoryRepository.DeleteAsync(id);
             return true;
         }
 
         public async Task<IEnumerable<ItemCategoryDTO>> GetAllCategoriesAsync()
         {
-            var categories = await _context.Categories.ToListAsync();
+            var categories = await _itemCategoryRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<ItemCategoryDTO>>(categories);
         }
 
         public async Task<ItemCategoryDTO?> GetCategoryByIdAsync(Guid id)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
-            return _mapper?.Map<ItemCategoryDTO?>(category);
+            var category = await _itemCategoryRepository.GetByIdAsync(id);
+            return category != null ? _mapper.Map<ItemCategoryDTO>(category) : null;
         }
 
         public async Task<bool> UpdateCategoryAsync(Guid id, ItemCategoryDTO itemcategoryDTO)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _itemCategoryRepository.GetByIdAsync(id);
             if (category == null) return false;
-            _mapper.Map<ItemCategoryDTO> (category);
-            await _context.SaveChangesAsync();
+
+            _mapper.Map(itemcategoryDTO, category);
+            await _itemCategoryRepository.UpdateAsync(category);
             return true;
         }
     }
