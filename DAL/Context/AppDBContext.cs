@@ -18,7 +18,6 @@ namespace DAL.Context
         public DbSet<Submission> Submissions { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<LotRequest> LotRequests { get; set; }
-        public DbSet<LotCategory> LotCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +29,7 @@ namespace DAL.Context
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
             modelBuilder.ApplyConfiguration(new SubmissionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
+            modelBuilder.ApplyConfiguration(new LotRequestConfiguration());
         }
     }
 }

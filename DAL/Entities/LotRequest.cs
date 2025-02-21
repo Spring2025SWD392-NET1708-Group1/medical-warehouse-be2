@@ -10,7 +10,6 @@ namespace DAL.Entities
     {
         public Guid LotRequestId { get; set; }
         public Guid LotCategoryID { get; set; }
-        public LotCategory LotCategory { get; set; }
         public DateTime StockInDate {  get; set; }
         public bool Status { get; set; }
         public ICollection<Item> Items { get; set; } = new List<Item>();
