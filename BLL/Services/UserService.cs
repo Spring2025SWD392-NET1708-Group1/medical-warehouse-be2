@@ -1,33 +1,35 @@
 using AutoMapper;
 using BLL.DTOs;
 using BLL.Interfaces;
-using DAL.Context;
 using DAL.Entities;
-using Microsoft.EntityFrameworkCore;
+using DAL.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
     public class UserService : IUserService
     {
-        private readonly AppDbContext _context;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public UserService(AppDbContext context, IMapper mapper)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
-            _context = context;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
 
         public async Task<IEnumerable<UserViewDTO>> GetAllUsersAsync()
         {
-            var users = await _context.Users.Include(u => u.Role).ToListAsync();
-            return _mapper.Map<IEnumerable<UserViewDTO>>(users); // AutoMapper replaces manual mapping
+            var users = await _userRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<UserViewDTO>>(users);
         }
 
         public async Task<UserViewDTO?> GetUserByIdAsync(Guid id)
         {
-            var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
-            return _mapper.Map<UserViewDTO>(user);
+            var user = await _userRepository.GetByIdAsync(id);
+            return user != null ? _mapper.Map<UserViewDTO>(user) : null;
         }
 
         public async Task<UserViewDTO> CreateUserAsync(UserCreateDTO userDTO)
@@ -35,28 +37,26 @@ namespace BLL.Services
             var userEntity = _mapper.Map<User>(userDTO);
             userEntity.Id = Guid.NewGuid();
 
-            _context.Users.Add(userEntity);
-            await _context.SaveChangesAsync();
+            await _userRepository.AddAsync(userEntity);
             return _mapper.Map<UserViewDTO>(userEntity);
         }
 
         public async Task<bool> UpdateUserAsync(Guid id, UserUpdateDTO userDTO)
         {
-            var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _userRepository.GetByIdAsync(id);
             if (user == null) return false;
 
-            _mapper.Map(userDTO, user); // AutoMapper updates entity fields
-            await _context.SaveChangesAsync();
+            _mapper.Map(userDTO, user);
+            await _userRepository.UpdateAsync(user);
             return true;
         }
 
         public async Task<bool> DeleteUserAsync(Guid id)
         {
-            var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _userRepository.GetByIdAsync(id);
             if (user == null) return false;
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            await _userRepository.DeleteAsync(id);
             return true;
         }
     }
