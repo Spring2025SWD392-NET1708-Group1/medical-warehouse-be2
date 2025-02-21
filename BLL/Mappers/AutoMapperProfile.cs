@@ -8,23 +8,24 @@ namespace BLL.Mappers
     {
         public AutoMapperProfile()
         {
-            // Create mapping
             CreateMap<UserCreateDTO, User>()
-                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore()); // Hashing should be done before saving
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
 
-            // Update mapping (only map non-null values)
             CreateMap<UserUpdateDTO, User>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
                     srcMember != null));
 
-            // View mapping (fetch related RoleName)
             CreateMap<User, UserViewDTO>()
                 .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name));
 
-            CreateMap<Role, RoleDTO>()
-                .ReverseMap()
+            CreateMap<RoleCreateDTO, Role>();
+
+            CreateMap<RoleUpdateDTO, Role>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
                     srcMember != null));
+
+            CreateMap<Role, RoleViewDTO>()
+                .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.Id));
 
             CreateMap<ItemCreateDTO, Item>();
 
@@ -40,8 +41,14 @@ namespace BLL.Mappers
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
                     srcMember != null));
 
-            CreateMap<Order, OrderDTO>()
-                .ReverseMap()
+            CreateMap<Order, OrderViewDTO>()
+                .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails))
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.FullName));
+
+            CreateMap<OrderCreateDTO, Order>()
+                .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails));
+
+            CreateMap<OrderUpdateDTO, Order>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
                     srcMember != null));
 
@@ -53,7 +60,8 @@ namespace BLL.Mappers
 
             CreateMap<OrderDetail, OrderDetailViewDTO>()
                 .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => src.Order.OrderDate))
-                .ForMember(dest => dest.ItemName, opt => opt.MapFrom(src => src.Item.Name));
+                .ForMember(dest => dest.ItemName, opt => opt.MapFrom(src => src.Item.Name))
+                .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Price));
 
             CreateMap<SubmissionCreateDTO, Submission>();
 

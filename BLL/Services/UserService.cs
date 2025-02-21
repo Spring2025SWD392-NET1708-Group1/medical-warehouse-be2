@@ -21,7 +21,7 @@ namespace BLL.Services
         public async Task<IEnumerable<UserViewDTO>> GetAllUsersAsync()
         {
             var users = await _context.Users.Include(u => u.Role).ToListAsync();
-            return _mapper.Map<IEnumerable<UserViewDTO>>(users); // AutoMapper replaces manual mapping
+            return _mapper.Map<IEnumerable<UserViewDTO>>(users);
         }
 
         public async Task<UserViewDTO?> GetUserByIdAsync(Guid id)

@@ -23,14 +23,14 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<RoleDTO> CreateRoleAsync(RoleDTO roleDTO)
+        public async Task<RoleViewDTO> CreateRoleAsync(RoleCreateDTO roleDTO)
         {
             var role = _mapper.Map<Role>(roleDTO);
             role.Id = Guid.NewGuid();
 
             await _context.Roles.AddAsync(role);
             await _context.SaveChangesAsync();
-            return _mapper.Map<RoleDTO>(role);
+            return _mapper.Map<RoleViewDTO>(role);
 
         }
 
@@ -43,19 +43,19 @@ namespace BLL.Services
             return true;
         }
 
-        public async Task<IEnumerable<RoleDTO>> GetAllRolesAsync()
+        public async Task<IEnumerable<RoleViewDTO>> GetAllRolesAsync()
         {
             var roles = await _context.Roles.ToListAsync();
-            return _mapper.Map<IEnumerable<RoleDTO>>(roles);
+            return _mapper.Map<IEnumerable<RoleViewDTO>>(roles);
         }
 
-        public async Task<RoleDTO?> GetRoleByIdAsync(Guid id)
+        public async Task<RoleViewDTO?> GetRoleByIdAsync(Guid id)
         {
             var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == id);
-            return _mapper.Map<RoleDTO>(role);
+            return _mapper.Map<RoleViewDTO>(role);
         }
 
-        public async Task<bool> UpdateRoleAsync(Guid id, RoleDTO roleDTO)
+        public async Task<bool> UpdateRoleAsync(Guid id, RoleUpdateDTO roleDTO)
         {
             var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == id);
             if (role == null) return false;

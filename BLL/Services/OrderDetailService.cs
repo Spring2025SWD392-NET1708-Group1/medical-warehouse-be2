@@ -40,18 +40,6 @@ namespace BLL.Services
             return true;
         }
 
-        public async Task<IEnumerable<OrderDetailViewDTO>> GetAllOrderDetails()
-        {
-            var orderDetails = await _context.OrderDetails.ToListAsync();
-            return _mapper.Map<IEnumerable<OrderDetailViewDTO>>(orderDetails);
-        }
-
-        public async Task<OrderDetailViewDTO?> GetOrderDetail(Guid id)
-        {
-            var orderDetail = await _context.OrderDetails.FirstOrDefaultAsync(x=>x.Id == id);
-            return _mapper.Map<OrderDetailViewDTO?>(orderDetail);
-        }
-
         public async Task<bool> UpdateOrderDetail(Guid id, OrderDetailUpdateDTO orderDetailDTO)
         {
             var orderDetail = await _context.OrderDetails.FirstOrDefaultAsync(x => x.Id == id);
