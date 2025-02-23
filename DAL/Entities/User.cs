@@ -14,5 +14,7 @@ namespace DAL.Entities
         public bool EmailConfirmed { get; set; }
         public Role Role { get; set; } = null!;
         public ICollection<Order> Orders { get; set; } = new List<Order>();
+        // Navigation property: LotRequests (Staff managing them)
+        public ICollection<LotRequest> LotRequests { get; set; } = new List<LotRequest>();
     }
 }

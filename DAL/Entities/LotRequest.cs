@@ -9,9 +9,12 @@ namespace DAL.Entities
     public class LotRequest
     {
         public Guid LotRequestId { get; set; }
-        public Guid LotCategoryID { get; set; }
-        public DateTime StockInDate {  get; set; }
-        public bool Status { get; set; }
-        public ICollection<Item> Items { get; set; } = new List<Item>();
+        public DateTime StockInDate { get; set; }
+        public string Quality { get; set; }
+        public Guid ItemId { get; set; }
+        public Item Item { get; set; }
+        public bool Status { get; set; } = false;
+        public Guid StaffId { get; set; }
+        public User Staff { get; set; }
     }
 }

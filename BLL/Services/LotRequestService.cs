@@ -3,6 +3,7 @@ using BLL.DTOs;
 using BLL.Interfaces;
 using DAL.Context;
 using DAL.Entities;
+using DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,52 +13,50 @@ namespace BLL.Services
 {
     public class LotRequestService : ILotRequestService
     {
-        private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        private readonly ILotRequestRepository _lotRequestRepository;
 
-        public LotRequestService(AppDbContext context, IMapper mapper)
+        public LotRequestService(IMapper mapper, ILotRequestRepository lotRequestRepository)
         {
-            _context = context;
             _mapper = mapper;
+            _lotRequestRepository = lotRequestRepository;
         }
 
         public async Task<IEnumerable<LotRequestViewDTO>> GetAllLotRequestsAsync()
         {
-            var lotRequests = await _context.LotRequests.ToListAsync();
+            var lotRequests = await _lotRequestRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<LotRequestViewDTO>>(lotRequests);
         }
 
         public async Task<LotRequestViewDTO?> GetLotRequestByIdAsync(Guid id)
         {
-            var lotRequest = await _context.LotRequests.FirstOrDefaultAsync(x => x.Id == id);
+            var lotRequest = await _lotRequestRepository.GetByIdAsync(id);
             return _mapper.Map<LotRequestViewDTO?>(lotRequest);
         }
 
         public async Task<LotRequestViewDTO> CreateLotRequestAsync(LotRequestCreateDTO lotRequestDTO)
         {
             var lotRequest = _mapper.Map<LotRequest>(lotRequestDTO);
-            await _context.LotRequests.AddAsync(lotRequest);
-            await _context.SaveChangesAsync();
+            await _lotRequestRepository.AddAsync(lotRequest);
             return _mapper.Map<LotRequestViewDTO>(lotRequest);
         }
 
         public async Task<bool> UpdateLotRequestAsync(Guid id, LotRequestUpdateDTO lotRequestDTO)
         {
-            var lotRequest = await _context.LotRequests.FirstOrDefaultAsync(x => x.Id == id);
+            var lotRequest = await _lotRequestRepository.GetByIdAsync(id);
             if (lotRequest == null) return false;
 
             _mapper.Map(lotRequestDTO, lotRequest);
-            await _context.SaveChangesAsync();
+            await _lotRequestRepository.UpdateAsync(lotRequest);
             return true;
         }
 
         public async Task<bool> DeleteLotRequestAsync(Guid id)
         {
-            var lotRequest = await _context.LotRequests.FirstOrDefaultAsync(x => x.Id == id);
+            var lotRequest = await _lotRequestRepository.GetByIdAsync(id);
             if (lotRequest == null) return false;
 
-            _context.LotRequests.Remove(lotRequest);
-            await _context.SaveChangesAsync();
+            await _lotRequestRepository.DeleteAsync(id);
             return true;
         }
     }
