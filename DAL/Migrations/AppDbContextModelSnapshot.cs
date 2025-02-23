@@ -136,7 +136,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = new Guid("d9b4f38f-e9d4-4d2c-a479-746c16a6c697"),
-                            OrderDate = new DateTime(2025, 2, 20, 3, 44, 17, 297, DateTimeKind.Utc).AddTicks(1973),
+                            OrderDate = new DateTime(2025, 2, 23, 11, 55, 21, 153, DateTimeKind.Utc).AddTicks(8907),
                             Status = 0,
                             TotalPrice = 0m,
                             UserId = new Guid("d8f0b849-d1a2-45d5-8a23-47772060c8fc")
