@@ -58,10 +58,10 @@ namespace BLL.Services
             return true;
         }
 
-        public async Task<IEnumerable<OrderDetailViewDTO>> GetOrderDetailsAsync(Guid id)
-        {
-            var orderDetails = await _context.OrderDetails.Where(od => od.OrderId == id).ToListAsync();
-            return _mapper.Map<IEnumerable<OrderDetailViewDTO>>(orderDetails);
-        }
+        // public async Task<IEnumerable<OrderDetailViewDTO>> GetOrderDetailsAsync(Guid id)
+        // {
+        //     var orderDetails = await _context.OrderDetails.Where(od => od.OrderId == id).ToListAsync();
+        //     return _mapper.Map<IEnumerable<OrderDetailViewDTO>>(orderDetails);
+        // }
     }
 }

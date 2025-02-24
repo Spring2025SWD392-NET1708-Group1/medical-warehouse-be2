@@ -26,7 +26,7 @@ namespace BLL.Services
             role.Id = Guid.NewGuid();
 
             await _roleRepository.AddAsync(role);
-            return _mapper.Map<RoleDTO>(role);
+            return _mapper.Map<RoleViewDTO>(role);
         }
 
         public async Task<bool> DeleteRoleAsync(Guid id)
@@ -40,13 +40,13 @@ namespace BLL.Services
         public async Task<IEnumerable<RoleViewDTO>> GetAllRolesAsync()
         {
             var roles = await _roleRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<RoleDTO>>(roles);
+            return _mapper.Map<IEnumerable<RoleViewDTO>>(roles);
         }
 
         public async Task<RoleViewDTO?> GetRoleByIdAsync(Guid id)
         {
             var role = await _roleRepository.GetByIdAsync(id);
-            return role != null ? _mapper.Map<RoleDTO>(role) : null;
+            return role != null ? _mapper.Map<RoleViewDTO>(role) : null;
         }
 
         public async Task<bool> UpdateRoleAsync(Guid id, RoleUpdateDTO roleDTO)
