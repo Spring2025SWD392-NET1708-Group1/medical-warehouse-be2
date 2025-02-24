@@ -23,20 +23,20 @@ namespace BLL.Services
         public async Task<IEnumerable<OrderViewDTO>> GetAllOrdersAsync()
         {
             var orders = await _orderRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<OrderDTO>>(orders);
+            return _mapper.Map<IEnumerable<OrderViewDTO>>(orders);
         }
 
         public async Task<OrderViewDTO?> GetOrderByIdAsync(Guid id)
         {
             var order = await _orderRepository.GetByIdAsync(id);
-            return order != null ? _mapper.Map<OrderDTO>(order) : null;
+            return order != null ? _mapper.Map<OrderViewDTO>(order) : null;
         }
 
         public async Task<OrderViewDTO> CreateOrderAsync(OrderCreateDTO orderDTO)
         {
             var orderEntity = _mapper.Map<Order>(orderDTO);
             await _orderRepository.AddAsync(orderEntity);
-            return _mapper.Map<OrderDTO>(orderEntity);
+            return _mapper.Map<OrderViewDTO>(orderEntity);
         }
 
         public async Task<bool> UpdateOrderAsync(Guid id, OrderUpdateDTO orderDTO)
