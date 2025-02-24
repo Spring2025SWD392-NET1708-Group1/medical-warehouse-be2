@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/submission")]
     public class SubmissionController : ControllerBase
     {
         private readonly ISubmissionService _submissionService;

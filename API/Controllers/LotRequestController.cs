@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/lot-request")]
     public class LotRequestController : ControllerBase
     {
         private readonly ILotRequestService _lotRequestService;
