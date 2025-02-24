@@ -30,16 +30,14 @@ namespace BLL.Mappers
             CreateMap<ItemCreateDTO, Item>();
 
             CreateMap<ItemUpdateDTO, Item>()
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
-                    srcMember != null));
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Item, ItemViewDTO>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.ItemCategory.Name));
 
             CreateMap<ItemCategory, ItemCategoryDTO>()
                 .ReverseMap()
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
-                    srcMember != null));
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Order, OrderViewDTO>()
                 .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails))
@@ -55,8 +53,7 @@ namespace BLL.Mappers
             CreateMap<OrderDetailCreateDTO, OrderDetail>();
 
             CreateMap<OrderDetailUpdateDTO, OrderDetail>()
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
-                    srcMember != null));
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<OrderDetail, OrderDetailViewDTO>()
                 .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => src.Order.OrderDate))
@@ -66,12 +63,21 @@ namespace BLL.Mappers
             CreateMap<SubmissionCreateDTO, Submission>();
 
             CreateMap<SubmissionUpdateDTO, Submission>()
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
-                    srcMember != null));
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Submission, SubmissionViewDTO>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
                 .ForMember(dest => dest.SubmittedAt, opt => opt.MapFrom(src => src.CreatedDate));
+
+            CreateMap<LotRequest, LotRequestViewDTO>()
+                .ForMember(dest => dest.Item, opt => opt.MapFrom(src => src.Item))
+                .ForMember(dest => dest.StaffName, opt => opt.MapFrom(src => src.Staff.FullName));
+
+            CreateMap<LotRequestCreateDTO, LotRequest>();
+
+            CreateMap<LotRequestUpdateDTO, LotRequest>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
         }
     }
 }

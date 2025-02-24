@@ -2,6 +2,8 @@ using BLL.Interfaces;
 using BLL.Mappers;
 using BLL.Services;
 using DAL.Context;
+using DAL.Repositories.Implementations;
+using DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -61,14 +63,26 @@ namespace API
             });
 
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
-            //Dependency Injection
+            //Repository Dependency Injection
+            builder.Services.AddScoped<IItemCategoryRepository, ItemCategoryRepository>();
+            builder.Services.AddScoped<IItemRepository, ItemRepository>();
+            builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+            builder.Services.AddScoped<ISubmissionRepository, SubmissionRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ILotRequestRepository, LotRequestRepository>();
+
+            //Service Dependency Injection
             builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
             builder.Services.AddScoped<IItemService, ItemService>();
+            builder.Services.AddScoped<ILotRequestService, LotRequestService>();
             builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IRoleService, RoleService>();
             builder.Services.AddScoped<ISubmissionService, SubmissionService>();
             builder.Services.AddScoped<IUserService, UserService>();
+
 
             var connectionString = (builder.Configuration.GetConnectionString("DefaultConnection"));
             builder.Services.AddDbContext<AppDbContext>(options =>

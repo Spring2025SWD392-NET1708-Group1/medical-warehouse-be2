@@ -1,75 +1,60 @@
 using AutoMapper;
 using BLL.DTOs;
 using BLL.Interfaces;
-using DAL.Context;
 using DAL.Entities;
-using Microsoft.EntityFrameworkCore;
+using DAL.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly AppDbContext _context;
+        private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
 
-        public OrderService(AppDbContext context, IMapper mapper)
+        public OrderService(IOrderRepository orderRepository, IMapper mapper)
         {
-            _context = context;
+            _orderRepository = orderRepository;
             _mapper = mapper;
         }
 
         public async Task<IEnumerable<OrderViewDTO>> GetAllOrdersAsync()
         {
-            var orders = await _context.Orders
-                .Include(o => o.OrderDetails)
-                .ThenInclude(o => o.Item)
-                .Include(o => o.User)
-                .ToListAsync();
-            return _mapper.Map<IEnumerable<OrderViewDTO>>(orders);
+            var orders = await _orderRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
 
         public async Task<OrderViewDTO?> GetOrderByIdAsync(Guid id)
         {
-            var order = await _context.Orders.Include(o => o.OrderDetails).FirstOrDefaultAsync(o => o.Id == id);
-            return _mapper.Map<OrderViewDTO>(order);
+            var order = await _orderRepository.GetByIdAsync(id);
+            return order != null ? _mapper.Map<OrderDTO>(order) : null;
         }
 
         public async Task<OrderViewDTO> CreateOrderAsync(OrderCreateDTO orderDTO)
         {
             var orderEntity = _mapper.Map<Order>(orderDTO);
-            orderEntity.OrderDate = DateTime.UtcNow;
-            orderEntity.Status = Common.Enums.OrderStatus.Pending;
-            // Calculate the TotalPrice based on the OrderDetails
-            decimal totalPrice = 0;
-
-            foreach (var detail in orderDTO.OrderDetails)
-            {
-                totalPrice += detail.Quantity * detail.Price; // Calculate price for each OrderDetail
-            }
-            orderEntity.TotalPrice = totalPrice; 
-
-            await _context.Orders.AddAsync(orderEntity);
-            await _context.SaveChangesAsync();
-            return _mapper.Map<OrderViewDTO>(orderEntity);
+            await _orderRepository.AddAsync(orderEntity);
+            return _mapper.Map<OrderDTO>(orderEntity);
         }
 
         public async Task<bool> UpdateOrderAsync(Guid id, OrderUpdateDTO orderDTO)
         {
-            var order = await _context.Orders.Include(o => o.OrderDetails).FirstOrDefaultAsync(o => o.Id == id);
+            var order = await _orderRepository.GetByIdAsync(id);
             if (order == null) return false;
 
             _mapper.Map(orderDTO, order);
-            await _context.SaveChangesAsync();
+            await _orderRepository.UpdateAsync(order);
             return true;
         }
 
         public async Task<bool> DeleteOrderAsync(Guid id)
         {
-            var order = await _context.Orders.Include(o => o.OrderDetails).FirstOrDefaultAsync(o => o.Id == id);
+            var order = await _orderRepository.GetByIdAsync(id);
             if (order == null) return false;
 
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
+            await _orderRepository.DeleteAsync(id);
             return true;
         }
 
