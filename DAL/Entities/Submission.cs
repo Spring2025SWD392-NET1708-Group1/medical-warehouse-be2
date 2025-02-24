@@ -1,10 +1,5 @@
 ﻿using Common.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
@@ -12,11 +7,18 @@ namespace DAL.Entities
     {
         [Key]
         public Guid Id { get; set; }
+
         [Required]
         public Guid UserId { get; set; }
-        public User User { get; set; }
+
+        public User User { get; set; } = null!; // Ensures navigation property is required
+
+        [Required]
         public SubmissionType Type { get; set; }
-        public required string Context { get; set; }
-        public DateTime CreatedDate { get; set; }
+
+        [Required]
+        public string Context { get; set; } = string.Empty; // Default to empty string
+
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow; // Default timestamp
     }
 }
