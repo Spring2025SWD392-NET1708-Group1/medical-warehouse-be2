@@ -1,7 +1,16 @@
 namespace BLL.DTOs
 {
-    public class RoleDTO
+    public class RoleViewDTO
     {
-        public string Name { get; set; } = string.Empty;
+        public Guid RoleId { get; set; }
+        public string Name { get; set; }
+    }
+    public class RoleCreateDTO
+    {
+        public string Name { get; set; }
+    }
+    public class RoleUpdateDTO
+    {
+        public string? Name { get; set; }
     }
 }

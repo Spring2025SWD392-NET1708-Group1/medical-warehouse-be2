@@ -4,10 +4,10 @@ namespace BLL.Interfaces
 {
     public interface IRoleService
     {
-        Task<IEnumerable<RoleDTO>> GetAllRolesAsync();
-        Task<RoleDTO?> GetRoleByIdAsync(Guid id);
-        Task<RoleDTO> CreateRoleAsync(RoleDTO roleDTO);
-        Task<bool> UpdateRoleAsync(Guid id, RoleDTO roleDTO);
+        Task<IEnumerable<RoleViewDTO>> GetAllRolesAsync();
+        Task<RoleViewDTO?> GetRoleByIdAsync(Guid id);
+        Task<RoleViewDTO> CreateRoleAsync(RoleCreateDTO roleDTO);
+        Task<bool> UpdateRoleAsync(Guid id, RoleUpdateDTO roleDTO);
         Task<bool> DeleteRoleAsync(Guid id);
     }
 }

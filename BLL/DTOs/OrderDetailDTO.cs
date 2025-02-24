@@ -31,11 +31,9 @@ namespace BLL.DTOs
         public Guid Id { get; set; }
         public Guid OrderId { get; set; }
         public DateTime OrderDate { get; set; } // From Order entity
-        public string ItemName { get; set; } = string.Empty; // From Item entity
+        public string ItemName { get; set; } // From Item entity
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice => Quantity * UnitPrice; // Computed field
     }
-
-
 }

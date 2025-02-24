@@ -4,10 +4,11 @@ namespace BLL.Interfaces
 {
     public interface IOrderService
     {
-        Task<IEnumerable<OrderDTO>> GetAllOrdersAsync();
-        Task<OrderDTO?> GetOrderByIdAsync(Guid id);
-        Task<OrderDTO> CreateOrderAsync(OrderDTO orderDTO);
-        Task<bool> UpdateOrderAsync(Guid id, OrderDTO orderDTO);
+        Task<IEnumerable<OrderViewDTO>> GetAllOrdersAsync();
+        Task<OrderViewDTO?> GetOrderByIdAsync(Guid id);
+        // Task<IEnumerable<OrderDetailViewDTO>> GetOrderDetailsAsync(Guid id);
+        Task<OrderViewDTO> CreateOrderAsync(OrderCreateDTO dto);
+        Task<bool> UpdateOrderAsync(Guid id, OrderUpdateDTO dto);
         Task<bool> DeleteOrderAsync(Guid id);
     }
 }
