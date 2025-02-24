@@ -29,7 +29,7 @@ namespace BLL.Services
 
         public async Task<LotRequestViewDTO?> GetLotRequestByIdAsync(Guid id)
         {
-            var lotRequest = await _context.LotRequests.FirstOrDefaultAsync(x => x.Id == id);
+            var lotRequest = await _context.LotRequests.FirstOrDefaultAsync(x => x.LotRequestId == id);
             return _mapper.Map<LotRequestViewDTO?>(lotRequest);
         }
 
@@ -43,7 +43,7 @@ namespace BLL.Services
 
         public async Task<bool> UpdateLotRequestAsync(Guid id, LotRequestUpdateDTO lotRequestDTO)
         {
-            var lotRequest = await _context.LotRequests.FirstOrDefaultAsync(x => x.Id == id);
+            var lotRequest = await _context.LotRequests.FirstOrDefaultAsync(x => x.LotRequestId == id);
             if (lotRequest == null) return false;
 
             _mapper.Map(lotRequestDTO, lotRequest);
@@ -53,7 +53,7 @@ namespace BLL.Services
 
         public async Task<bool> DeleteLotRequestAsync(Guid id)
         {
-            var lotRequest = await _context.LotRequests.FirstOrDefaultAsync(x => x.Id == id);
+            var lotRequest = await _context.LotRequests.FirstOrDefaultAsync(x => x.LotRequestId == id);
             if (lotRequest == null) return false;
 
             _context.LotRequests.Remove(lotRequest);
