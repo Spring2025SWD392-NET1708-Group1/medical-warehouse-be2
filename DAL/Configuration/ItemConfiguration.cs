@@ -27,22 +27,25 @@ namespace DAL.Configurations
 
             // Seed Data
             builder.HasData(
-                new Item { 
-                    Id = Guid.Parse("80c0ac22-9f4d-478e-8fe1-f01b4e6727b0"), 
-                    Name = "Paracetamol", 
+                new Item
+                {
+                    Id = Guid.Parse("80c0ac22-9f4d-478e-8fe1-f01b4e6727b0"),
+                    Name = "Paracetamol",
                     Description = "Pain reliever",
-                    ItemCategoryId = Guid.Parse("aed8c311-739c-4264-83a1-8a5e8854c182"), 
-                    Quantity = 100, 
-                    Price = 5.00m, 
-                    ExpiryDate = new DateTime(2026, 12, 31) 
+                    ItemCategoryId = Guid.Parse("aed8c311-739c-4264-83a1-8a5e8854c182"),
+                    Quantity = 100,
+                    Price = 5.00m,
+                    ExpiryDate = new DateTime(2026, 12, 31)
                 },
-                new Item { Id = Guid.Parse("1bfe3b07-5419-4718-bed9-0439016c7f78"), 
-                    Name = "Surgical Gloves", 
+                new Item
+                {
+                    Id = Guid.Parse("1bfe3b07-5419-4718-bed9-0439016c7f78"),
+                    Name = "Surgical Gloves",
                     Description = "Disposable gloves",
-                    ItemCategoryId = Guid.Parse("b7c51ee8-f942-4492-98b7-877b5777cd21"), 
-                    Quantity = 200, 
-                    Price = 10.00m, 
-                    ExpiryDate = new DateTime(2027, 06, 15) 
+                    ItemCategoryId = Guid.Parse("b7c51ee8-f942-4492-98b7-877b5777cd21"),
+                    Quantity = 200,
+                    Price = 10.00m,
+                    ExpiryDate = new DateTime(2027, 06, 15)
                 }
             );
         }

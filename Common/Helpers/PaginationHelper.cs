@@ -1,8 +1,8 @@
 namespace Common.Helpers
 {
-  public class PaginationHelper
-  {
+    public class PaginationHelper
+    {
 
-  }
+    }
 }
- 
+

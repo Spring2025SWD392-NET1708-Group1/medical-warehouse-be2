@@ -1,6 +1,6 @@
 ﻿using DAL.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DAL.Configurations
 {

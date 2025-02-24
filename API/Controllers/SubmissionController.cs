@@ -40,7 +40,7 @@ namespace API.Controllers
         public async Task<IActionResult> UpdateSubmission(Guid id, [FromBody] SubmissionUpdateDTO dto)
         {
             var submission = await _submissionService.UpdateSubmissionAsync(id, dto);
-            if(submission == false) return NotFound();
+            if (submission == false) return NotFound();
             return Ok(submission);
         }
 

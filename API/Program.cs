@@ -4,11 +4,7 @@ using BLL.Services;
 using DAL.Context;
 using DAL.Repositories.Implementations;
 using DAL.Repositories.Interfaces;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 namespace API
@@ -47,19 +43,19 @@ namespace API
                 });
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
                 {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[] {}
-        }
-    });
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
             });
 
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);

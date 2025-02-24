@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
 using BLL.Interfaces;
-using DAL.Context;
 using DAL.Entities;
 using DAL.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BLL.Services
 {

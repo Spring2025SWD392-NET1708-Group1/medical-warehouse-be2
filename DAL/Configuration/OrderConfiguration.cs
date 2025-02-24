@@ -1,5 +1,5 @@
-using DAL.Entities;
 using Common.Enums;
+using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
