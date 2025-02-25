@@ -33,6 +33,7 @@ namespace DAL.Repositories.Implementations
         {
             return await _context.LotRequests
                 .Include(lr => lr.Item)
+                .ThenInclude(i => i.ItemCategory)
                 .Include(lr => lr.Staff)
                 .ToListAsync();
         }
@@ -41,6 +42,7 @@ namespace DAL.Repositories.Implementations
         {
             return await _context.LotRequests
                 .Include(lr => lr.Item)
+                .ThenInclude(i => i.ItemCategory)
                 .Include(lr => lr.Staff)
                 .FirstOrDefaultAsync(x => x.LotRequestId == id);
         }
