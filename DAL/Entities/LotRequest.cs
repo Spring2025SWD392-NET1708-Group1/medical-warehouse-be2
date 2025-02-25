@@ -1,4 +1,11 @@
-﻿namespace DAL.Entities
+﻿using Common.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAL.Entities
 {
     public class LotRequest
     {
@@ -7,7 +14,7 @@
         public string Quality { get; set; } = string.Empty;
         public Guid ItemId { get; set; }
         public required Item Item { get; set; }
-        public bool Status { get; set; } = false;
+        public required LotRequestEnums Status { get; set; }
         public Guid StaffId { get; set; }
         public required User Staff { get; set; }
     }

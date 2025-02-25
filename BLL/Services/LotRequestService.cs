@@ -32,6 +32,7 @@ namespace BLL.Services
         public async Task<LotRequestViewDTO> CreateLotRequestAsync(LotRequestCreateDTO lotRequestDTO)
         {
             var lotRequest = _mapper.Map<LotRequest>(lotRequestDTO);
+            lotRequest.LotRequestId = Guid.NewGuid();
             await _lotRequestRepository.AddAsync(lotRequest);
             return _mapper.Map<LotRequestViewDTO>(lotRequest);
         }
