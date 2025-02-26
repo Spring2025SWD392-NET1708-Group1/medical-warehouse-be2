@@ -1,0 +1,15 @@
+using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+namespace DAL.Configuration
+{
+  public class StorageCategoryConfiguration : IEntityTypeConfiguration<StorageCategory>
+  {
+    public void Configure(EntityTypeBuilder<StorageCategory> builder)
+    {
+      builder.HasKey(sc => sc.Id);
+      builder.Property(sc => sc.Name).IsRequired().HasMaxLength(100);
+    }
+  }
+}
+
