@@ -16,7 +16,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Submission>>> GetAllSubmissions()
+        public async Task<ActionResult<IEnumerable<SubmissionViewDTO>>> GetAllSubmissions()
         {
             return Ok(await _submissionService.GetAllSubmissionsAsync());
         }

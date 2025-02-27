@@ -27,13 +27,17 @@ namespace BLL.Mappers
             CreateMap<Role, RoleViewDTO>()
                 .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.Id));
 
-            CreateMap<ItemCreateDTO, Item>();
+            CreateMap<ItemCreateDTO, Item>()
+                .ForMember(dest => dest.ItemCategoryId, opt => opt.MapFrom(src => src.ItemCategoryId));
 
             CreateMap<ItemUpdateDTO, Item>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Item, ItemViewDTO>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.ItemCategory.Name));
+
+            CreateMap<ItemViewDTO, Item>()
+                .ForPath(dest => dest.ItemCategory.Name, opt => opt.MapFrom(src => src.CategoryName));
 
             CreateMap<ItemCategory, ItemCategoryDTO>()
                 .ReverseMap()
@@ -66,7 +70,7 @@ namespace BLL.Mappers
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Submission, SubmissionViewDTO>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
+                .ForPath(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
                 .ForMember(dest => dest.SubmittedAt, opt => opt.MapFrom(src => src.CreatedDate));
 
             CreateMap<LotRequest, LotRequestViewDTO>()

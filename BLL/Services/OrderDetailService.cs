@@ -39,7 +39,7 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<OrderDetailViewDTO>>(orderDetails);
         }
 
-        public async Task<OrderDetailViewDTO?> GetOrderDetail(Guid id)
+        public async Task<OrderDetailViewDTO?> GetOrderDetailById(Guid id)
         {
             var orderDetail = await _orderDetailRepository.GetByIdAsync(id);
             return orderDetail != null ? _mapper.Map<OrderDetailViewDTO>(orderDetail) : null;

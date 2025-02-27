@@ -10,7 +10,7 @@ namespace BLL.DTOs
         public string Description { get; set; } = string.Empty;
 
         [Required]
-        public Guid CategoryId { get; set; } // Category reference for creation
+        public Guid ItemCategoryId { get; set; } // Category reference for creation
 
         [Required]
         [Range(0, int.MaxValue)]

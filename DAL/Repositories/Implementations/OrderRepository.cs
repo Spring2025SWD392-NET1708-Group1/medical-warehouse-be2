@@ -16,7 +16,11 @@ namespace DAL.Repositories.Implementations
 
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            return await _context.Orders.Include(o => o.OrderDetails).ToListAsync();
+            return await _context.Orders
+                .Include(u => u.User)
+                .Include(o => o.OrderDetails)
+                .ThenInclude(i => i.Item)
+                .ToListAsync();
         }
 
         public async Task<Order?> GetByIdAsync(Guid id)

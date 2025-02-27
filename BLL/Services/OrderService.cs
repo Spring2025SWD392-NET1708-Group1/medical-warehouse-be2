@@ -1,6 +1,7 @@
 using AutoMapper;
 using BLL.DTOs;
 using BLL.Interfaces;
+using Common.Enums;
 using DAL.Entities;
 using DAL.Repositories.Interfaces;
 
@@ -32,6 +33,15 @@ namespace BLL.Services
         public async Task<OrderViewDTO> CreateOrderAsync(OrderCreateDTO orderDTO)
         {
             var orderEntity = _mapper.Map<Order>(orderDTO);
+            orderEntity.Id = Guid.NewGuid();
+            orderEntity.Status = OrderStatus.Pending;
+            decimal totalPrice = 0;
+            foreach (var details in orderEntity.OrderDetails)
+            {
+                totalPrice += details.Price;
+            }
+            orderEntity.TotalPrice = totalPrice;
+            Console.WriteLine("TOTAL: "+totalPrice);
             await _orderRepository.AddAsync(orderEntity);
             return _mapper.Map<OrderViewDTO>(orderEntity);
         }

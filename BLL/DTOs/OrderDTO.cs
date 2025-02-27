@@ -19,12 +19,12 @@ namespace BLL.DTOs
     public class OrderCreateDTO
     {
         public Guid UserId { get; set; }
-        public required List<OrderDetail> OrderDetails { get; set; }
+        public required List<OrderDetailCreateDTO> OrderDetails { get; set; }
     }
 
     public class OrderUpdateDTO
     {
         public OrderStatus? Status { get; set; }
-        public List<OrderDetail>? OrderDetails { get; set; }
+        public List<OrderDetailUpdateDTO>? OrderDetails { get; set; }
     }
 }
