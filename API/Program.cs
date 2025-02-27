@@ -6,6 +6,9 @@ using DAL.Repositories.Implementations;
 using DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace API
 {
@@ -57,6 +60,38 @@ namespace API
                     }
                 });
             });
+            // 🔹 Register Authentication with JWT
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                var jwtSettings = builder.Configuration.GetSection("Jwt");
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
+                };
+            });
+
+            // 🔹 Register Authorization Policies
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("SupplierPolicy", policy => policy.RequireRole("Supplier"));
+                options.AddPolicy("StaffPolicy", policy => policy.RequireRole("Staff"));
+                options.AddPolicy("CustomerPolicy", policy => policy.RequireRole("Customer"));
+                options.AddPolicy("DeliveryUnitPolicy", policy => policy.RequireRole("DeliveryUnit"));
+            });
+
+
+
 
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             //Repository Dependency Injection
