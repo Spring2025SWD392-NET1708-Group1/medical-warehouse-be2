@@ -60,7 +60,7 @@ namespace BLL.Mappers
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<OrderDetail, OrderDetailViewDTO>()
-                .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => src.Order.OrderDate))
+                .ForPath(dest => dest.OrderDate, opt => opt.MapFrom(src => src.Order.OrderDate))
                 .ForMember(dest => dest.ItemName, opt => opt.MapFrom(src => src.Item.Name))
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Price));
 
@@ -75,7 +75,7 @@ namespace BLL.Mappers
 
             CreateMap<LotRequest, LotRequestViewDTO>()
                 .ForMember(dest => dest.Item, opt => opt.MapFrom(src => src.Item))
-                .ForMember(dest => dest.StaffName, opt => opt.MapFrom(src => src.Staff.FullName));
+                .ForPath(dest => dest.StaffName, opt => opt.MapFrom(src => src.Staff.FullName));
 
             CreateMap<LotRequestCreateDTO, LotRequest>();
 
