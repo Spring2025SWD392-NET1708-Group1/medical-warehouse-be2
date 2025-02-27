@@ -2,11 +2,6 @@
 using DAL.Entities;
 using DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Repositories.Implementations
 {
@@ -38,6 +33,7 @@ namespace DAL.Repositories.Implementations
         {
             return await _context.LotRequests
                 .Include(lr => lr.Item)
+                .ThenInclude(i => i.ItemCategory)
                 .Include(lr => lr.Staff)
                 .ToListAsync();
         }
@@ -46,6 +42,7 @@ namespace DAL.Repositories.Implementations
         {
             return await _context.LotRequests
                 .Include(lr => lr.Item)
+                .ThenInclude(i => i.ItemCategory)
                 .Include(lr => lr.Staff)
                 .FirstOrDefaultAsync(x => x.LotRequestId == id);
         }

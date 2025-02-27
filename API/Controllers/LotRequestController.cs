@@ -1,6 +1,5 @@
 ﻿using BLL.DTOs;
 using BLL.Interfaces;
-using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -40,7 +39,7 @@ namespace API.Controllers
         public async Task<ActionResult> UpdateLotRequest(Guid id, [FromBody] LotRequestUpdateDTO request)
         {
             var updatedItem = await _lotRequestService.UpdateLotRequestAsync(id, request);
-            if(updatedItem == false) return NotFound();
+            if (updatedItem == false) return NotFound();
             return Ok(updatedItem);
         }
 

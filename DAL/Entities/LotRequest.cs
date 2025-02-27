@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Common.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Entities
 {
     public class LotRequest
     {
+        [Key]
         public Guid LotRequestId { get; set; }
         public DateTime StockInDate { get; set; }
-        public string Quality { get; set; }
+        public string Quality { get; set; } = string.Empty;
         public Guid ItemId { get; set; }
         public Item Item { get; set; }
-        public bool Status { get; set; } = false;
+        public LotRequestEnums? Status { get; set; }
         public Guid StaffId { get; set; }
         public User Staff { get; set; }
     }

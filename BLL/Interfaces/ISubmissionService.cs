@@ -1,9 +1,4 @@
 ﻿using BLL.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
@@ -13,6 +8,6 @@ namespace BLL.Interfaces
         Task<SubmissionViewDTO?> GetSubmissionByIdAsync(Guid id);
         Task<SubmissionViewDTO> CreateSubmissionAsync(SubmissionCreateDTO dto);
         Task<bool> UpdateSubmissionAsync(Guid id, SubmissionUpdateDTO dto);
-        Task<bool> DeleteSubmissionAsync(Guid id);  
+        Task<bool> DeleteSubmissionAsync(Guid id);
     }
 }

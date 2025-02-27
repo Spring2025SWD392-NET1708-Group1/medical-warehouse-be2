@@ -43,7 +43,7 @@ namespace API.Controllers
             return Ok(updatedOrder);
         }
 
-        [HttpDelete("{id}")]    
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(Guid id)
         {
             var deletedOrder = await _orderService.DeleteOrderAsync(id);
