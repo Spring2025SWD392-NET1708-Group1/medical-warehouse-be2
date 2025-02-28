@@ -5,5 +5,21 @@ namespace BLL.DTOs
     public int Id { get; set; }
     public string Name { get; set; }
   }
-}
 
+  public class StorageCategoryViewDTO
+  {
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int StorageCount { get; set; }
+  }
+
+  public class StorageCategoryCreateDTO
+  {
+    public string Name { get; set; }
+  }
+
+  public class StorageCategoryUpdateDTO
+  {
+    public string Name { get; set; }
+  }
+}
