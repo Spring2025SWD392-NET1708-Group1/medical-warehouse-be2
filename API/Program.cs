@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using DAL.Repositories;
 
 namespace API
 {
@@ -104,6 +105,7 @@ namespace API
       builder.Services.AddScoped<ISubmissionRepository, SubmissionRepository>();
       builder.Services.AddScoped<IUserRepository, UserRepository>();
       builder.Services.AddScoped<ILotRequestRepository, LotRequestRepository>();
+      builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
 
       //Service Dependency Injection
       builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
@@ -115,6 +117,7 @@ namespace API
       builder.Services.AddScoped<ISubmissionService, SubmissionService>();
       builder.Services.AddScoped<IUserService, UserService>();
       builder.Services.AddScoped<IAuthService, AuthService>();
+      builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 
 
       var connectionString = (builder.Configuration.GetConnectionString("DefaultConnection"));
