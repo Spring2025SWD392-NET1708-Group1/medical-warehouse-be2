@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs;
 using BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -50,6 +51,15 @@ namespace API.Controllers
             var success = await _lotRequestService.DeleteLotRequestAsync(id);
             if (success == false) return NotFound();
             return NoContent();
+        }
+
+        [Authorize(Policy = "AdminPolicy")]
+        [HttpPut("admin/{id}")]
+        public async Task<ActionResult> UpdateLotRequestAdmin(Guid id, [FromBody] LotRequestAdminUpdateDTO request)
+        {
+            var updatedItem = await _lotRequestService.UpdateLotRequestAdminAsync(id, request);
+            if (updatedItem == false) return NotFound();
+            return Ok(updatedItem);
         }
     }
 }

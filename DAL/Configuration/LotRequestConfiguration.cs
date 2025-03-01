@@ -33,6 +33,11 @@ namespace DAL.Configurations
                 .HasForeignKey(lr => lr.UserId)
                 .OnDelete(DeleteBehavior.Restrict); // Prevent deleting User if there are LotRequests
 
+            builder.HasOne(lr => lr.Storage)
+                .WithMany()
+                .HasForeignKey(lr => lr.StorageId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.HasData(
                 new LotRequest
                 {
@@ -40,7 +45,8 @@ namespace DAL.Configurations
                     Quality = "Good",
                     ItemId = Guid.Parse("80c0ac22-9f4d-478e-8fe1-f01b4e6727b0"), // Paracetamol
                     Status = LotRequestEnums.Reported,
-                    UserId = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8f1") // xhuyz (admin@example.com)
+                    UserId = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8f1"), // xhuyz (admin@example.com)
+                    StorageId = 1
                 },
                 new LotRequest
                 {
@@ -48,7 +54,8 @@ namespace DAL.Configurations
                     Quality = "Excellent",
                     ItemId = Guid.Parse("1bfe3b07-5419-4718-bed9-0439016c7f78"), // Surgical Gloves
                     Status = LotRequestEnums.Approved,
-                    UserId = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8f1") // xhuyz (admin@example.com)
+                    UserId = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8f1"), // xhuyz (admin@example.com)
+                    StorageId = 2
                 }
             );
 

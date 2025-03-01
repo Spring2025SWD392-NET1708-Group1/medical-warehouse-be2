@@ -35,6 +35,7 @@ namespace DAL.Repositories.Implementations
                 .Include(lr => lr.Item)
                 .ThenInclude(i => i.ItemCategory)
                 .Include(lr => lr.User)
+                .Include(lr => lr.Storage)
                 .ToListAsync();
         }
 
@@ -44,6 +45,7 @@ namespace DAL.Repositories.Implementations
                 .Include(lr => lr.Item)
                 .ThenInclude(i => i.ItemCategory)
                 .Include(lr => lr.User)
+                .Include(lr => lr.Storage)
                 .FirstOrDefaultAsync(x => x.LotRequestId == id);
         }
 

@@ -47,6 +47,16 @@ namespace BLL.Services
             return true;
         }
 
+        public async Task<bool> UpdateLotRequestAdminAsync(Guid id, LotRequestAdminUpdateDTO lotRequestDTO)
+        {
+            var lotRequest = await _lotRequestRepository.GetByIdAsync(id);
+            if(lotRequest == null) return false;
+
+            _mapper.Map(lotRequestDTO, lotRequest);
+            await _lotRequestRepository.UpdateAsync(lotRequest);
+            return true;
+            
+        }
         public async Task<bool> DeleteLotRequestAsync(Guid id)
         {
             var lotRequest = await _lotRequestRepository.GetByIdAsync(id);
