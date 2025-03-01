@@ -17,8 +17,8 @@ namespace DAL.Configurations
             builder.Property(s => s.IsActive)
                 .IsRequired();
 
-            builder.HasOne<StorageCategory>()
-                .WithMany()
+            builder.HasOne(s => s.StorageCategory)
+                .WithMany(sc => sc.Storages)
                 .HasForeignKey(s => s.StorageCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
