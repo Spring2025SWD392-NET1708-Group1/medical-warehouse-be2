@@ -41,7 +41,6 @@ namespace BLL.Services
                 totalPrice += details.Price;
             }
             orderEntity.TotalPrice = totalPrice;
-            Console.WriteLine("TOTAL: "+totalPrice);
             await _orderRepository.AddAsync(orderEntity);
             return _mapper.Map<OrderViewDTO>(orderEntity);
         }

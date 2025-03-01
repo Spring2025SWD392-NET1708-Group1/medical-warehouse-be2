@@ -10,7 +10,6 @@ namespace BLL.DTOs
   {
     public int Id { get; set; }
     public string Name { get; set; }
-    public int StorageCount { get; set; }
   }
 
   public class StorageCategoryCreateDTO
@@ -20,6 +19,6 @@ namespace BLL.DTOs
 
   public class StorageCategoryUpdateDTO
   {
-    public string Name { get; set; }
+    public string? Name { get; set; }
   }
 }

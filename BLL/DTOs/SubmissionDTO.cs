@@ -25,7 +25,7 @@ namespace BLL.DTOs
     {
         public Guid SubmissionId { get; set; }
         public string UserName { get; set; } = string.Empty; // From User entity
-        public SubmissionType Type { get; set; }
+        public string Type { get; set; } = string.Empty;
         public string Context { get; set; } = string.Empty;
         public DateTime SubmittedAt { get; set; } // Optional timestamp field
     }

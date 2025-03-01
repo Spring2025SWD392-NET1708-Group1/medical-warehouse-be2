@@ -5,16 +5,14 @@ namespace BLL.DTOs
     public class LotRequestViewDTO
     {
         public Guid LotRequestId { get; set; }
-        public DateTime StockInDate { get; set; }
         public string Quality { get; set; } = string.Empty;
         public required ItemViewDTO Item { get; set; }
-        public string StaffName { get; set; } = string.Empty;
-        public LotRequestEnums Status { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
     }
 
     public class LotRequestCreateDTO
     {
-        public DateTime StockInDate { get; set; }
         public string Quality { get; set; } = string.Empty;
         public Guid ItemId { get; set; }
         public Guid StaffId { get; set; }
@@ -22,7 +20,6 @@ namespace BLL.DTOs
 
     public class LotRequestUpdateDTO
     {
-        public DateTime StockInDate { get; set; }
         public string? Quality { get; set; } = string.Empty;
         public Guid? ItemId { get; set; }
         public LotRequestEnums? Status { get; set; }

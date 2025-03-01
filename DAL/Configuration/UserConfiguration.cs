@@ -31,6 +31,11 @@ namespace DAL.Configurations
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasMany(u => u.LotRequests)
+                .WithOne(lr => lr.User)
+                .HasForeignKey(lr => lr.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // Seed Data
             builder.HasData(
                 new User

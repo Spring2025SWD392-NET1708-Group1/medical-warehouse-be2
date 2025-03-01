@@ -7,12 +7,13 @@ namespace DAL.Entities
     {
         [Key]
         public Guid LotRequestId { get; set; }
-        public DateTime StockInDate { get; set; }
-        public string Quality { get; set; } = string.Empty;
         public Guid ItemId { get; set; }
         public Item Item { get; set; }
+        public Guid UserId { get; set; }
+        public User User { get; set; }
+        public string Quality { get; set; } = string.Empty;
         public LotRequestEnums? Status { get; set; }
-        public Guid StaffId { get; set; }
-        public User Staff { get; set; }
+
+
     }
 }

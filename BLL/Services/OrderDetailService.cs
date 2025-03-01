@@ -20,6 +20,7 @@ namespace BLL.Services
         public async Task<OrderDetailViewDTO> CreateOrderDetail(OrderDetailCreateDTO orderDetailDTO)
         {
             var orderDetail = _mapper.Map<OrderDetail>(orderDetailDTO);
+            orderDetail.Id = Guid.NewGuid();
             await _orderDetailRepository.AddAsync(orderDetail);
             return _mapper.Map<OrderDetailViewDTO>(orderDetail);
         }
