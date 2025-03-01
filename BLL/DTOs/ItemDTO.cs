@@ -27,7 +27,6 @@ namespace BLL.DTOs
     public class ItemUpdateDTO
     {
         [Required]
-        public Guid Id { get; set; } // Needed for identifying the item
 
         public string? Name { get; set; }
 

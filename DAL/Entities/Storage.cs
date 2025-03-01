@@ -13,6 +13,8 @@ namespace DAL.Entities
     [Required]
     public int StorageCategoryId { get; set; }
 
+    public StorageCategory StorageCategory { get; set; }
+
     [Required]
     public bool IsActive { get; set; } = true;
   }

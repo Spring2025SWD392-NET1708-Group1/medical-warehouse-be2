@@ -18,8 +18,8 @@ namespace DAL.Context
     public DbSet<Submission> Submissions { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     public DbSet<LotRequest> LotRequests { get; set; }
-    public DbSet<Storage> Storage { get; set; }
-    public DbSet<StorageCategory> StorageCategory { get; set; }
+    public DbSet<Storage> Storages { get; set; }
+    public DbSet<StorageCategory> StorageCategories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

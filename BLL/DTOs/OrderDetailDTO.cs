@@ -5,8 +5,6 @@ namespace BLL.DTOs
     public class OrderDetailCreateDTO
     {
         [Required]
-        public Guid OrderId { get; set; }
-        [Required]
         public Guid ItemId { get; set; }
         [Required]
         [Range(1, int.MaxValue)]
@@ -19,7 +17,6 @@ namespace BLL.DTOs
     public class OrderDetailUpdateDTO
     {
         [Required]
-        public Guid Id { get; set; } // Needed to identify the existing record
         public Guid? OrderId { get; set; }
         public Guid? ItemId { get; set; }
         public int? Quantity { get; set; }
