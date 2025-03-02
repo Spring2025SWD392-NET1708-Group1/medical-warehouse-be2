@@ -7,15 +7,17 @@ namespace DAL.Entities
     public int Id { get; set; }
 
     [Required]
-    [MaxLength(2)]
-    public string Name { get; set; }
+    [MaxLength(50)]
+    public string Name { get; set; } = string.Empty;
 
     [Required]
     public int StorageCategoryId { get; set; }
-
     public StorageCategory StorageCategory { get; set; }
 
     [Required]
     public bool IsActive { get; set; } = true;
+
+    // Navigation property for related items
+    public ICollection<Item> Items { get; set; } = new List<Item>();
   }
 }
