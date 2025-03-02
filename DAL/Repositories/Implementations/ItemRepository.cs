@@ -63,5 +63,15 @@ namespace DAL.Repositories.Implementations
           .Include(i => i.Storage)
           .FirstOrDefaultAsync(i => i.Id == id);
     }
+
+    // Fetch items that will expire by a given date
+    public async Task<IEnumerable<Item>> GetItemsExpiringByDateAsync(DateTime expiryDate)
+    {
+      return await _context.Items
+          .Where(i => i.ExpiryDate <= expiryDate)
+          .Include(i => i.ItemCategory)
+          .Include(i => i.Storage)
+          .ToListAsync();
+    }
   }
 }

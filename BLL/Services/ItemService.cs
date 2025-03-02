@@ -55,5 +55,11 @@ namespace BLL.Services
       await _itemRepository.UpdateAsync(item);
       return true;
     }
+
+    public async Task<IEnumerable<ItemViewDTO>> GetItemsExpiringByDateAsync(DateTime expiryDate)
+    {
+      var items = await _itemRepository.GetItemsExpiringByDateAsync(expiryDate);
+      return _mapper.Map<IEnumerable<ItemViewDTO>>(items);
+    }
   }
 }
