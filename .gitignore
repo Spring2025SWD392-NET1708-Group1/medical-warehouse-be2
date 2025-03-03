@@ -368,3 +368,4 @@ FodyWeavers.xsd
 /DAL/Migrations/AppDbContextModelSnapshot.cs
 
 .idea/
+/API/Properties/launchSettings.json

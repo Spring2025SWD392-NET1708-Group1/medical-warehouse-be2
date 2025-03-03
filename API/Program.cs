@@ -92,7 +92,16 @@ namespace API
             });
 
 
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowLocalhost",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:5173") // Allow requests from this frontend origin
+                              .AllowAnyHeader()
+                              .AllowAnyMethod();
+                    });
+            });
 
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             //Repository Dependency Injection
@@ -146,6 +155,8 @@ namespace API
                     options.RoutePrefix = "swagger"; // Set Swagger UI at root (http://localhost:<port>/)
                 });
             }
+
+            app.UseCors("AllowLocalhost");
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
