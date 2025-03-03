@@ -25,6 +25,7 @@ namespace BLL.DTOs
         public string PhoneNumber { get; set; } = string.Empty;
         public string RoleName { get; set; } = string.Empty; // From Role entity
         public bool EmailConfirmed { get; set; }
+        public Guid? ActivationToken { get; set; }
     }
 
     public class UserUpdateDTO

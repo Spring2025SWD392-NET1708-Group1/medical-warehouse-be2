@@ -8,6 +8,7 @@ using DAL.Repositories.Interfaces;
 using BLL.DTOs;
 using BLL.Interfaces;
 using DAL.Configurations;
+using Org.BouncyCastle.Asn1.Ocsp;
 namespace BLL.Services
 {
     public class AuthService : IAuthService
@@ -52,8 +53,21 @@ namespace BLL.Services
             {
                 return GenerateJwtToken(user.Id, user.Role.Name);
             }
-
             return null;
+        }
+
+        public async Task ActivateAccountAsync(Guid token)
+        {
+            var user = await _userRepository.GetByActivationTokenAsync(token);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            user.EmailConfirmed = true;
+            user.ActivationToken = null;
+            user.ActivationTokenExpires = null;
+            await _userRepository.UpdateAsync(user);
         }
 
         public string GenerateJwtToken(Guid userId, string roleName)
