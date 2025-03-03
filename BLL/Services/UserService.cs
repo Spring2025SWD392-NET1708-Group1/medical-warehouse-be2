@@ -31,6 +31,12 @@ namespace BLL.Services
             return user != null ? _mapper.Map<UserViewDTO>(user) : null;
         }
 
+        public async Task<UserViewDTO?> GetUserByEmailAsync(string email)
+        {
+            var user = await _userRepository.GetByEmailAsync(email);
+            return user != null ? _mapper.Map<UserViewDTO>(user) : null;
+        }
+
         public async Task<UserViewDTO> CreateUserAsync(UserCreateDTO userDTO)
         {
             var userEntity = _mapper.Map<User>(userDTO);

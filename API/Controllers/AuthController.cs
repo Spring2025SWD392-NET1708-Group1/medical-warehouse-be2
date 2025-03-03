@@ -49,6 +49,12 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserCreateDTO userDto)
         {
+            var existingUser = await _userService.GetUserByEmailAsync(userDto.Email);
+            if (existingUser != null)
+            {
+                return BadRequest("User with this email already exists.");
+            }
+
             var createdUser = await _userService.CreateUserAsync(userDto);
             var activationLink = "https://localhost:7050/api/auth/activate?token=" + createdUser.ActivationToken;
             await _emailService.SendActivationEmailAsync(userDto.Email, activationLink);
