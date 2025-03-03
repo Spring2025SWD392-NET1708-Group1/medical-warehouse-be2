@@ -11,11 +11,13 @@ namespace BLL.Services
 {
   public class UserService : IUserService
   {
+    private readonly IAuthService _authService;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository, IMapper mapper)
+    public UserService(IAuthService authService, IUserRepository userRepository, IMapper mapper)
     {
+      _authService = authService;
       _userRepository = userRepository;
       _mapper = mapper;
     }
@@ -37,7 +39,7 @@ namespace BLL.Services
       var userEntity = _mapper.Map<User>(userDTO);
       userEntity.Id = Guid.NewGuid();
       userEntity.ActivationToken = Guid.NewGuid();
-
+      userEntity.PasswordHash = _authService.HashPassword(userDTO.Password);
       await _userRepository.AddAsync(userEntity);
       return _mapper.Map<UserViewDTO>(userEntity);
     }
