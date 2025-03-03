@@ -115,6 +115,7 @@ namespace API
             builder.Services.AddScoped<ISubmissionService, SubmissionService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
 
             // Calendar picker for query that accepts datetime
             builder.Services.AddSwaggerGen(c =>

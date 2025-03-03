@@ -36,6 +36,7 @@ namespace BLL.Services
     {
       var userEntity = _mapper.Map<User>(userDTO);
       userEntity.Id = Guid.NewGuid();
+      userEntity.ActivationToken = Guid.NewGuid();
 
       await _userRepository.AddAsync(userEntity);
       return _mapper.Map<UserViewDTO>(userEntity);
