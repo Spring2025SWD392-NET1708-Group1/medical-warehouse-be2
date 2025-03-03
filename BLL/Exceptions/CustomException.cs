@@ -1,8 +1,8 @@
 namespace BLL.Exceptions
 {
-  public class CustomException
-  {
+    public class CustomException
+    {
 
-  }
+    }
 }
- 
+

@@ -1,11 +1,11 @@
 ﻿using BLL.DTOs;
+using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using BLL.Interfaces;
 
 namespace API.Controllers
 {
@@ -50,9 +50,7 @@ namespace API.Controllers
         public async Task<IActionResult> Register([FromBody] UserCreateDTO userDto)
         {
             var createdUser = await _userService.CreateUserAsync(userDto);
-            // send activation email
             var activationLink = "https://localhost:7050/api/auth/activate?token=" + createdUser.ActivationToken;
-            //var activationLink = Url.Action(nameof(ActivateAccount), "User", new { token = createdUser.ActivationToken }, Request.Scheme);
             await _emailService.SendActivationEmailAsync(userDto.Email, activationLink);
             return CreatedAtAction(nameof(Register), new { id = createdUser.Id }, createdUser);
         }

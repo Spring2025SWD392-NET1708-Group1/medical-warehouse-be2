@@ -1,6 +1,5 @@
 ﻿using BLL.DTOs;
 using BLL.Interfaces;
-using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

@@ -1,6 +1,4 @@
 ﻿using Common.Enums;
-using DAL.Entities;
-using System.Diagnostics.Contracts;
 
 namespace BLL.DTOs
 {

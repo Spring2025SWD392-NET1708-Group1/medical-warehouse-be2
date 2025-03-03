@@ -42,10 +42,10 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateStorageAsync(int id,  StorageUpdateDTO dto)
+        public async Task<IActionResult> UpdateStorageAsync(int id, StorageUpdateDTO dto)
         {
             var storage = await _storageService.UpdateStorageAsync(id, dto);
-            if(storage == false) return NotFound();
+            if (storage == false) return NotFound();
             return Ok(storage);
         }
 
