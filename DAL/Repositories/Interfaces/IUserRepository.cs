@@ -10,5 +10,6 @@ namespace DAL.Repositories.Interfaces
         Task AddAsync(User user);
         Task UpdateAsync(User user);
         Task DeleteAsync(Guid id);
+        Task<User?> GetByActivationTokenAsync(Guid token);
     }
 }
