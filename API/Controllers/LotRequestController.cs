@@ -15,6 +15,7 @@ namespace API.Controllers
             _lotRequestService = lotRequestService;
         }
 
+        [Authorize(Policy = "ManagerPolicy")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LotRequestViewDTO>>> GetAllLotRequests()
         {

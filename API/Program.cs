@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Security.Claims;
 
 namespace API
 {
@@ -33,8 +34,8 @@ namespace API
                         ValidateAudience = false,
                         ValidateLifetime = false,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey =
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"])),
+                        RoleClaimType = "role"
                     };
                 });
 
@@ -88,7 +89,7 @@ namespace API
                 options.AddPolicy("SupplierPolicy", policy => policy.RequireRole("Supplier"));
                 options.AddPolicy("StaffPolicy", policy => policy.RequireRole("Staff"));
                 options.AddPolicy("CustomerPolicy", policy => policy.RequireRole("Customer"));
-                options.AddPolicy("DeliveryUnitPolicy", policy => policy.RequireRole("DeliveryUnit"));
+                options.AddPolicy("ManagerPolicy", policy => policy.RequireRole("Manager"));
             });
 
 
