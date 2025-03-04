@@ -3,11 +3,6 @@ using BLL.DTOs;
 using BLL.Interfaces;
 using DAL.Entities;
 using DAL.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Services
 {
@@ -60,7 +55,7 @@ namespace BLL.Services
         public async Task<bool> UpdateStorageAsync(int id, StorageUpdateDTO storageDTO)
         {
             var storage = await _storageRepository.GetByIdAsync(id);
-            if(storage == null) return false;  
+            if (storage == null) return false;
 
             _mapper.Map(storageDTO, storage);
             await _storageRepository.UpdateAsync(storage);

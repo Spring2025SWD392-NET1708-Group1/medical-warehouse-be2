@@ -1,14 +1,12 @@
+using BLL.DTOs;
+using BLL.Interfaces;
+using DAL.Repositories.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using DAL.Repositories.Interfaces;
-using BLL.DTOs;
-using BLL.Interfaces;
-using DAL.Configurations;
-using Org.BouncyCastle.Asn1.Ocsp;
 namespace BLL.Services
 {
     public class AuthService : IAuthService

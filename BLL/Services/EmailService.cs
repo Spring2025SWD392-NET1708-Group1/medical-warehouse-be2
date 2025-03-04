@@ -1,15 +1,9 @@
 ﻿using BLL.DTOs;
 using BLL.Interfaces;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using MimeKit.Text;
-using MimeKit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MailKit.Security;
+using Microsoft.Extensions.Configuration;
+using MimeKit;
+using MimeKit.Text;
 
 namespace BLL.Services
 {
@@ -52,7 +46,7 @@ namespace BLL.Services
         private MimeMessage CreateMimeMessage(string recipientEmail, string subject, string body)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("MWS", _emailSettings.Sender)); 
+            message.From.Add(new MailboxAddress("MWS", _emailSettings.Sender));
             message.To.Add(new MailboxAddress("", recipientEmail));
             message.Subject = subject;
             message.Body = new TextPart(TextFormat.Html) { Text = body };
