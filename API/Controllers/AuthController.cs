@@ -56,7 +56,7 @@ namespace API.Controllers
             }
 
             var createdUser = await _userService.CreateUserAsync(userDto);
-            var activationLink = "https://localhost:7050/api/auth/activate?token=" + createdUser.ActivationToken;
+            var activationLink = "http://localhost:5090/api/auth/activate?token=" + createdUser.ActivationToken;
             await _emailService.SendActivationEmailAsync(userDto.Email, activationLink);
             return CreatedAtAction(nameof(Register), new { id = createdUser.Id }, createdUser);
         }
