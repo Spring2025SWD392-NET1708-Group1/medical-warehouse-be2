@@ -14,9 +14,6 @@ namespace BLL.DTOs
         public Guid ItemCategoryId { get; set; } // Category reference for creation
 
         [Required]
-        public int StorageId { get; set; } // Storage reference for creation
-
-        [Required]
         [Range(0.01, double.MaxValue)]
         public decimal Price { get; set; }
     }
@@ -30,8 +27,6 @@ namespace BLL.DTOs
 
         public Guid? ItemCategoryId { get; set; } // Nullable, so updates can be partial
 
-        public int? StorageId { get; set; } // Nullable, allows storage changes
-
         public decimal? Price { get; set; }
     }
 
@@ -41,7 +36,6 @@ namespace BLL.DTOs
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string CategoryName { get; set; } = string.Empty;
-        public string StorageName { get; set; } = string.Empty; // Display Storage Name
         public decimal Price { get; set; }
     }
 }

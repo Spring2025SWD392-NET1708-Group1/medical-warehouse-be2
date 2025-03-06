@@ -9,6 +9,6 @@ namespace BLL.Interfaces
         Task<IEnumerable<ItemViewDTO>> GetAllItemsWithDetailsAsync(); // Updated method
         Task<ItemViewDTO?> GetItemByIdWithDetailsAsync(Guid id); // Updated method
         Task<bool> UpdateItemAsync(Guid id, ItemUpdateDTO itemDTO);
-
+        Task<IEnumerable<LotRequestViewDTO>> GetExpiredItemsByDateAsync(DateTime date);
     }
 }

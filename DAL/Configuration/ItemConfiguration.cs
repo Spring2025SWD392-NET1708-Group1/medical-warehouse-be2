@@ -25,11 +25,6 @@ namespace DAL.Configurations
                 .HasForeignKey(i => i.ItemCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(i => i.Storage)
-                .WithMany(s => s.Items)
-                .HasForeignKey(i => i.StorageId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             // Seed Data
             builder.HasData(
                 new Item
@@ -38,7 +33,6 @@ namespace DAL.Configurations
                     Name = "Paracetamol",
                     Description = "Pain reliever",
                     ItemCategoryId = Guid.Parse("aed8c311-739c-4264-83a1-8a5e8854c182"),
-                    StorageId = 1,
                     Price = 5.00m
                 },
                 new Item
@@ -47,7 +41,6 @@ namespace DAL.Configurations
                     Name = "Surgical Gloves",
                     Description = "Disposable gloves",
                     ItemCategoryId = Guid.Parse("b7c51ee8-f942-4492-98b7-877b5777cd21"),
-                    StorageId = 2,
                     Price = 10.00m
                 },
                 new Item
@@ -56,7 +49,6 @@ namespace DAL.Configurations
                     Name = "Antibiotic Ointment",
                     Description = "Topical antibiotic treatment",
                     ItemCategoryId = Guid.Parse("c3e3f7f8-8b32-4a3b-9f6a-45ef9d42a4e1"),
-                    StorageId = 3,
                     Price = 12.50m
                 }
             );
