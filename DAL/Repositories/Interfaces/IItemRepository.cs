@@ -13,8 +13,5 @@ namespace DAL.Repositories.Interfaces
         // New methods to fetch related data
         Task<IEnumerable<Item>> GetAllWithCategoryAndStorageAsync();
         Task<Item?> GetByIdWithCategoryAndStorageAsync(Guid id);
-        Task<IEnumerable<Item>> GetItemsExpiringByDateAsync(DateTime expiryDate);
-        Task<IEnumerable<Item>> GetItemsByExpiryRangeAsync(DateTime startDate, DateTime endDate);
-
     }
 }

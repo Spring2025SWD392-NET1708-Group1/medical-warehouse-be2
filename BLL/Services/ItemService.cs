@@ -55,27 +55,5 @@ namespace BLL.Services
             await _itemRepository.UpdateAsync(item);
             return true;
         }
-
-        public async Task<IEnumerable<ItemViewDTO>> GetItemsExpiringByDateAsync(DateTime expiryDate)
-        {
-            var items = await _itemRepository.GetItemsExpiringByDateAsync(expiryDate);
-            return _mapper.Map<IEnumerable<ItemViewDTO>>(items);
-        }
-
-        public async Task<IEnumerable<ItemViewDTO>> GetItemsByExpiryRangeAsync(DateTime startDate, DateTime endDate)
-        {
-            var items = await _itemRepository.GetItemsByExpiryRangeAsync(startDate, endDate);
-            return items.Select(item => new ItemViewDTO
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Description = item.Description,
-                CategoryName = item.ItemCategory.Name,
-                StorageName = item.Storage.Name,
-                Quantity = item.Quantity,
-                Price = item.Price,
-                ExpiryDate = item.ExpiryDate
-            });
-        }
     }
 }

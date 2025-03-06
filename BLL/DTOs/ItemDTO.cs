@@ -17,15 +17,8 @@ namespace BLL.DTOs
         public int StorageId { get; set; } // Storage reference for creation
 
         [Required]
-        [Range(0, int.MaxValue)]
-        public int Quantity { get; set; }
-
-        [Required]
         [Range(0.01, double.MaxValue)]
         public decimal Price { get; set; }
-
-        [Required]
-        public DateTime ExpiryDate { get; set; }
     }
 
     public class ItemUpdateDTO
@@ -39,11 +32,7 @@ namespace BLL.DTOs
 
         public int? StorageId { get; set; } // Nullable, allows storage changes
 
-        public int? Quantity { get; set; }
-
         public decimal? Price { get; set; }
-
-        public DateTime? ExpiryDate { get; set; }
     }
 
     public class ItemViewDTO
@@ -53,8 +42,6 @@ namespace BLL.DTOs
         public string Description { get; set; } = string.Empty;
         public string CategoryName { get; set; } = string.Empty;
         public string StorageName { get; set; } = string.Empty; // Display Storage Name
-        public int Quantity { get; set; }
         public decimal Price { get; set; }
-        public DateTime ExpiryDate { get; set; }
     }
 }
