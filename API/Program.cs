@@ -114,6 +114,7 @@ namespace API
             builder.Services.AddScoped<ISubmissionRepository, SubmissionRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ILotRequestRepository, LotRequestRepository>();
+            builder.Services.AddScoped<IStorageRepository, StorageRepository>();
 
             //Service Dependency Injection
             builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
@@ -126,6 +127,7 @@ namespace API
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<IStorageService, StorageService>();
 
             // Calendar picker for query that accepts datetime
             builder.Services.AddSwaggerGen(c =>
