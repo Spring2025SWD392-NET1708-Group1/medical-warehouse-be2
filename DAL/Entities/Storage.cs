@@ -18,6 +18,6 @@ namespace DAL.Entities
         public bool IsActive { get; set; } = true;
 
         // Navigation property for related items
-        public ICollection<Item> Items { get; set; } = new List<Item>();
+        public ICollection<Item> Items { get; set; } = [];
     }
 }

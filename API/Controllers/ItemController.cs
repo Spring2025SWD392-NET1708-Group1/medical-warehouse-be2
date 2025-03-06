@@ -30,22 +30,6 @@ namespace API.Controllers
             return Ok(item);
         }
 
-        [HttpGet("expiry-range")]
-        public async Task<ActionResult<IEnumerable<ItemViewDTO>>> GetItemsByExpiryRange(
-            [FromQuery] DateTime startDate,
-            [FromQuery] DateTime endDate)
-        {
-            if (startDate > endDate)
-                return BadRequest("Start date cannot be after end date.");
-
-            var items = await _itemService.GetItemsByExpiryRangeAsync(startDate, endDate);
-            if (!items.Any())
-                return NotFound("No items found within the given expiry range.");
-
-            return Ok(items);
-        }
-
-
         [HttpPost]
         public async Task<IActionResult> CreateItem([FromBody] ItemCreateDTO itemDto)
         {
@@ -72,13 +56,6 @@ namespace API.Controllers
             var success = await _itemService.DeleteItemAsync(id);
             if (!success) return NotFound();
             return NoContent();
-        }
-
-        [HttpGet("expiring-by/{expiryDate}")]
-        public async Task<ActionResult<IEnumerable<ItemViewDTO>>> GetItemsExpiringByDate(DateTime expiryDate)
-        {
-            var items = await _itemService.GetItemsExpiringByDateAsync(expiryDate);
-            return Ok(items);
         }
     }
 }
