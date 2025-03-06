@@ -56,5 +56,11 @@ namespace DAL.Repositories.Implementations
                 .Where(s => s.StorageCategoryId == categoryId)
                 .ToListAsync();
         }
+
+        public async Task<Storage?> GetStorageByNameAsync(string name)
+        {
+            return await _context.Storages
+                .FirstOrDefaultAsync(s => s.Name == name);
+        }
     }
 }

@@ -16,10 +16,12 @@ namespace BLL.DTOs
 
     public class LotRequestCreateDTO
     {
+        public int Quantity { get; set; }
         public string Quality { get; set; } = string.Empty;
         public Guid ItemId { get; set; }
         public Guid UserId { get; set; }
-        public int StorageId { get; set; }
+        public DateTime ExpiryDate { get; set; }
+        public string StorageName { get; set; } = string.Empty;
     }
 
     public class LotRequestUpdateDTO

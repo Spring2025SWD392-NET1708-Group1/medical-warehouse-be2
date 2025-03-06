@@ -10,5 +10,6 @@ namespace DAL.Repositories.Interfaces
         Task AddAsync(Storage storage);
         Task UpdateAsync(Storage storage);
         Task DeleteAsync(int id);
+        Task<Storage?> GetStorageByNameAsync(string name);
     }
 }
