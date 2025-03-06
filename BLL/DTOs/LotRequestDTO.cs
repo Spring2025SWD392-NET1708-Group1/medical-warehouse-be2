@@ -5,7 +5,9 @@ namespace BLL.DTOs
     public class LotRequestViewDTO
     {
         public Guid LotRequestId { get; set; }
+        public int Quantity { get; set; }
         public string Quality { get; set; } = string.Empty;
+        public DateTime ExpiryDate { get; set; }
         public required ItemViewDTO Item { get; set; }
         public string Username { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;

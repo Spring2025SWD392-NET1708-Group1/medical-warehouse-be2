@@ -57,5 +57,13 @@ namespace API.Controllers
             if (!success) return NotFound();
             return NoContent();
         }
+
+
+        [HttpGet("expiring-by/{expiryDate}")]
+        public async Task<ActionResult<IEnumerable<ItemViewDTO>>> GetItemsExpiringByDate(DateTime expiryDate)
+        {
+            var items = await _itemService.GetExpiredItemsByDateAsync(expiryDate);
+            return Ok(items);
+        }
     }
 }

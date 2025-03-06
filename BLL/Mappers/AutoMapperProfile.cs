@@ -35,8 +35,7 @@ namespace BLL.Mappers
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Item, ItemViewDTO>()
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.ItemCategory.Name))
-                .ForMember(dest => dest.StorageName, opt => opt.MapFrom(src => src.Storage.Name));
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.ItemCategory.Name));
 
             // Item Category Mappings
             CreateMap<ItemCategory, ItemCategoryDTO>()
