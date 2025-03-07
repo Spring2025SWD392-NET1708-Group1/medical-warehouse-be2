@@ -113,13 +113,14 @@ namespace API
             builder.Services.AddScoped<IRoleRepository, RoleRepository>();
             builder.Services.AddScoped<ISubmissionRepository, SubmissionRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<ILotRequestRepository, LotRequestRepository>();
+            builder.Services.AddScoped<IItemLotRepository, ItemLotRepository>();
             builder.Services.AddScoped<IStorageRepository, StorageRepository>();
+            builder.Services.AddScoped<IStorageCategoryRepository, StorageCategoryRepository>();
 
             //Service Dependency Injection
             builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
             builder.Services.AddScoped<IItemService, ItemService>();
-            builder.Services.AddScoped<ILotRequestService, LotRequestService>();
+            builder.Services.AddScoped<IItemLotService, ItemLotService>();
             builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IRoleService, RoleService>();
@@ -128,6 +129,7 @@ namespace API
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<IStorageService, StorageService>();
+            builder.Services.AddScoped<IStorageCategoryService, StorageCategoryService>();
 
             // Calendar picker for query that accepts datetime
             builder.Services.AddSwaggerGen(c =>

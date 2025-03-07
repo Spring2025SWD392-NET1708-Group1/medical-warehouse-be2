@@ -17,7 +17,7 @@ namespace DAL.Context
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Submission> Submissions { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<LotRequest> LotRequests { get; set; }
+        public DbSet<ItemLot> ItemLots { get; set; }
         public DbSet<Storage> Storages { get; set; }
         public DbSet<StorageCategory> StorageCategories { get; set; }
 
@@ -31,7 +31,7 @@ namespace DAL.Context
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
             modelBuilder.ApplyConfiguration(new SubmissionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
-            modelBuilder.ApplyConfiguration(new LotRequestConfiguration());
+            modelBuilder.ApplyConfiguration(new ItemLotConfiguration());
             modelBuilder.ApplyConfiguration(new StorageConfiguration());
             modelBuilder.ApplyConfiguration(new StorageCategoryConfiguration());
         }

@@ -17,6 +17,6 @@ namespace DAL.Entities
 
         public Role Role { get; set; } = null!;
         public ICollection<Order> Orders { get; set; } = new List<Order>();
-        public ICollection<LotRequest> LotRequests { get; set; } = new List<LotRequest>();
+        public ICollection<Item> Items { get; set; } = new List<Item>();
     }
 }
