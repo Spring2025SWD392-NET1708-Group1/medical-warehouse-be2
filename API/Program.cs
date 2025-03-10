@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Security.Claims;
+using BLL.Utils;
 
 namespace API
 {
@@ -85,11 +86,14 @@ namespace API
             // 🔹 Register Authorization Policies
             builder.Services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
-                options.AddPolicy("SupplierPolicy", policy => policy.RequireRole("Supplier"));
-                options.AddPolicy("StaffPolicy", policy => policy.RequireRole("Staff"));
-                options.AddPolicy("CustomerPolicy", policy => policy.RequireRole("Customer"));
-                options.AddPolicy("ManagerPolicy", policy => policy.RequireRole("Manager"));
+                options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("Supplier", policy => policy.RequireRole("Supplier"));
+                options.AddPolicy("Staff", policy => policy.RequireRole("Staff"));
+                options.AddPolicy("Customer", policy => policy.RequireRole("Customer"));
+                options.AddPolicy("Manager", policy => policy.RequireRole("Manager"));
+                options.AddPolicy("ManagerOrStaff", policy => policy.RequireRole("Manager", "Staff"));
+
+
             });
 
 
@@ -130,6 +134,8 @@ namespace API
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<IStorageService, StorageService>();
             builder.Services.AddScoped<IStorageCategoryService, StorageCategoryService>();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddScoped<JwtUtils>();
 
             // Calendar picker for query that accepts datetime
             builder.Services.AddSwaggerGen(c =>

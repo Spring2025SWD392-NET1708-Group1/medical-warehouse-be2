@@ -1,3 +1,4 @@
+using Common.Enums;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -17,7 +18,10 @@ namespace DAL.Configurations
             builder.Property(i => i.Description)
                 .HasMaxLength(255);
 
-            builder.Property(i => i.PricePerUnit)
+            builder.Property(i => i.ImportPricePerUnit)
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(i => i.ExportPricePerUnit)
                 .HasColumnType("decimal(18,2)");
 
             builder.HasOne(i => i.ItemCategory)
@@ -38,8 +42,11 @@ namespace DAL.Configurations
                     Name = "Paracetamol",
                     Description = "Pain reliever",
                     ItemCategoryId = Guid.Parse("aed8c311-739c-4264-83a1-8a5e8854c182"),
-                    PricePerUnit = 5.00m,
-                    UserId = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8f4") // Supplier
+                    ImportPricePerUnit = 5.00m,
+                    ExportPricePerUnit = 5.50m,
+                    UnitType = ItemType.Tablet,
+                    UserId = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8f4"), // Supplier
+                    IsForSale = true
                 },
                 new Item
                 {
@@ -47,8 +54,11 @@ namespace DAL.Configurations
                     Name = "Surgical Gloves",
                     Description = "Disposable gloves",
                     ItemCategoryId = Guid.Parse("b7c51ee8-f942-4492-98b7-877b5777cd21"),
-                    PricePerUnit = 10.00m,
-                    UserId = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8f4") // Supplier
+                    ImportPricePerUnit = 10.00m,
+                    ExportPricePerUnit = 10.50m,
+                    UnitType = ItemType.Pack,
+                    UserId = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8f4"), // Supplier
+                    IsForSale = true
                 },
                 new Item
                 {
@@ -56,8 +66,11 @@ namespace DAL.Configurations
                     Name = "Antibiotic Ointment",
                     Description = "Topical antibiotic treatment",
                     ItemCategoryId = Guid.Parse("c3e3f7f8-8b32-4a3b-9f6a-45ef9d42a4e1"),
-                    PricePerUnit = 12.50m,
-                    UserId = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8f4") // Supplier
+                    ImportPricePerUnit = 12.50m,
+                    ExportPricePerUnit = 13.50m,
+                    UnitType = ItemType.Box,
+                    UserId = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8f4"), // Supplier
+                    IsForSale = true
                 }
             );
         }

@@ -2,8 +2,9 @@
 {
     public enum SubmissionType
     {
-        Report,
-        Feedback,
-        Verify
+        Report = 0,
+        Feedback = 1,
+        Request = 2,
+        Task = 3
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
 using BLL.Interfaces;
+using BLL.Utils;
 using DAL.Entities;
 using DAL.Repositories.Implementations;
 using DAL.Repositories.Interfaces;
@@ -11,11 +12,13 @@ namespace BLL.Services
     {
         private readonly IMapper _mapper;
         private readonly IItemLotRepository _itemLotRepository;
+        private readonly JwtUtils _jwtUtils;
 
-        public ItemLotService(IMapper mapper, IItemLotRepository itemLotRepository)
+        public ItemLotService(IMapper mapper, IItemLotRepository itemLotRepository, JwtUtils jwtUtils)
         {
             _mapper = mapper;
             _itemLotRepository = itemLotRepository;
+            _jwtUtils = jwtUtils;
         }
 
         public async Task<IEnumerable<ItemLotViewDTO>> GetAllItemLotsAsync()
@@ -34,6 +37,8 @@ namespace BLL.Services
         {
             var itemLot = _mapper.Map<ItemLot>(itemLotDTO);
             itemLot.ItemLotId = Guid.NewGuid();
+            itemLot.Status = Common.Enums.LotStatus.Pending;
+
             await _itemLotRepository.AddAsync(itemLot);
             return _mapper.Map<ItemLotViewDTO>(itemLot);
         }
@@ -70,6 +75,32 @@ namespace BLL.Services
         public async Task<IEnumerable<ItemLotViewDTO>> GetExpiredItemsByDateAsync(DateTime date)
         {
             var itemLots = await _itemLotRepository.GetExpiredItemsByDateAsync(date);
+            return _mapper.Map<IEnumerable<ItemLotViewDTO>>(itemLots);
+        }
+
+        public async Task<IEnumerable<ItemLotViewDTO>> GetByItemIdAsync(Guid itemId)
+        {
+            var itemLots = await _itemLotRepository.GetByItemIdAsync(itemId);
+            return _mapper.Map<IEnumerable<ItemLotViewDTO>>(itemLots);
+        }
+
+        public async Task<IEnumerable<ItemLotViewDTO>> GetItemLotByStorageAsync(int storageId)
+        {
+            var itemLots = await _itemLotRepository.GetByStorageIdAsync(storageId);
+            return _mapper.Map<IEnumerable<ItemLotViewDTO>>(itemLots);
+        }
+
+        public async Task<IEnumerable<ItemLotViewDTO>> GetByStorageIdForStaffAsync()
+        {
+            var user = await _jwtUtils.GetUserFromToken();
+            Console.WriteLine("User storage: "+ user.StorageId.Value);
+            var itemLots = await _itemLotRepository.GetByStorageIdForStaffAsync(user.StorageId.Value);
+            return _mapper.Map<IEnumerable<ItemLotViewDTO>>(itemLots);
+        }
+
+        public async Task<IEnumerable<ItemLotViewDTO>> GetLotCreateRequestAsync()
+        {
+            var itemLots = await _itemLotRepository.GetCreateLotRequestAsync();
             return _mapper.Map<IEnumerable<ItemLotViewDTO>>(itemLots);
         }
     }

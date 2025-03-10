@@ -10,7 +10,7 @@ namespace DAL.Configurations
         {
             builder.HasKey(s => s.Id);
 
-            builder.Property(s => s.UserId)
+            builder.Property(s => s.FromUserId)
                 .IsRequired();
 
             builder.Property(s => s.Context)
@@ -19,9 +19,19 @@ namespace DAL.Configurations
             builder.Property(s => s.CreatedDate)
                 .IsRequired();
 
-            builder.HasOne(s => s.User)
+            builder.HasOne(s => s.FromUser)
+                .WithMany(u => u.SentSubmissions)
+                .HasForeignKey(s => s.FromUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(s => s.ToUser)
+                .WithMany(u => u.ReceivedSubmissions)
+                .HasForeignKey(s => s.ToUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(s=> s.Storage)
                 .WithMany()
-                .HasForeignKey(s => s.UserId)
+                .HasForeignKey(st => st.StorageId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

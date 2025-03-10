@@ -19,5 +19,6 @@ namespace DAL.Entities
 
         // Navigation property for related items
         public ICollection<ItemLot> ItemLots { get; set; } = [];
+        public ICollection<User> Users { get; set; } = [];
     }
 }

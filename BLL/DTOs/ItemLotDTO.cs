@@ -10,7 +10,6 @@ namespace BLL.DTOs
         public required ItemViewDTO Item { get; set; }
         public string Status { get; set; } = string.Empty;
         public string StorageName { get; set; } = string.Empty;
-        public decimal LotPrice { get; set; }
         public DateTime ExpiryDate { get; set; }
     }
 
@@ -19,8 +18,6 @@ namespace BLL.DTOs
         public string Quality { get; set; } = string.Empty;
         public int Quantity { get; set; }   
         public Guid ItemId { get; set; }
-        public int StorageId { get; set; }
-        public decimal LotPrice { get; set; }
         public DateTime ExpiryDate { get; set; }
     }
 
@@ -30,7 +27,6 @@ namespace BLL.DTOs
         public LotStatus? Status { get; set; }
         public string? Quality { get; set; }
         public int? Quantity { get; set; }
-        public decimal? LotPrice { get; set; }
         public DateTime? ExpiryDate { get; set; }
     }
 
@@ -42,7 +38,6 @@ namespace BLL.DTOs
         public string? Quality { get; set; }
         public int? Quantity { get; set; }
         public LotStatus? Status { get; set; }
-        public decimal LotPrice { get; set; }
         public DateTime ExpiryDate { get; set; }
     }
 }

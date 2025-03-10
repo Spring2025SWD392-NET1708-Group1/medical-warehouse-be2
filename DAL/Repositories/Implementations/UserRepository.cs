@@ -31,6 +31,7 @@ namespace DAL.Repositories.Implementations
         {
             return await _context.Users
                 .Include(u => u.Role)
+                .Include(u => u.Storage)
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
 

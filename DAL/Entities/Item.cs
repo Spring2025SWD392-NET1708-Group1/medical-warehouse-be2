@@ -1,3 +1,4 @@
+using Common.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Entities
@@ -15,6 +16,9 @@ namespace DAL.Entities
         // Define which Supplier offer to supply this Item
         public Guid UserId { get; set; }
         public User User { get; set; }
-        public decimal PricePerUnit { get; set; }
+        public ItemType UnitType { get; set; }
+        public decimal ImportPricePerUnit { get; set; }
+        public decimal? ExportPricePerUnit { get; set; }
+        public bool IsForSale { get; set; }
     }
 }

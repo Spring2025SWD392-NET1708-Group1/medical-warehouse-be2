@@ -1,8 +1,10 @@
 using BLL.DTOs;
 using BLL.Interfaces;
+using BLL.Utils;
 using DAL.Repositories.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Org.BouncyCastle.Crypto;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -13,31 +15,14 @@ namespace BLL.Services
     {
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
+        private readonly JwtUtils _jwtUtils;
 
-        public AuthService(IConfiguration configuration, IUserRepository userRepository)
+        public AuthService(IConfiguration configuration, IUserRepository userRepository, JwtUtils jwtUtils)
         {
             _configuration = configuration;
             _userRepository = userRepository;
+            _jwtUtils = jwtUtils;
         }
-        public string HashPassword(string password)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                StringBuilder builder = new StringBuilder();
-                foreach (var b in bytes)
-                    builder.Append(b.ToString("x2"));
-                return builder.ToString();
-            }
-        }
-
-        public bool VerifyPassword(string inputPassword, string storedHash)
-        {
-            string inputHash = HashPassword(inputPassword);
-
-            return inputHash == storedHash;
-        }
-
         public async Task<string> CheckLogin(UserLoginDTO loginDTO)
         {
             var user = await _userRepository.GetByEmailAsync(loginDTO.Email);
@@ -46,10 +31,10 @@ namespace BLL.Services
                 throw new Exception("User not found");
             }
 
-            bool isValid = VerifyPassword(loginDTO.Password, user.PasswordHash);
+            bool isValid = PasswordUtils.VerifyPassword(loginDTO.Password, user.PasswordHash);
             if (user.Email == loginDTO.Email && isValid)
             {
-                return GenerateJwtToken(user.Id, user.Role.Name);
+                return _jwtUtils.GenerateJwtToken(user);
             }
             return null;
         }
@@ -68,28 +53,6 @@ namespace BLL.Services
             await _userRepository.UpdateAsync(user);
         }
 
-        public string GenerateJwtToken(Guid userId, string roleName)
-        {
-            var jwtSettings = _configuration.GetSection("JwtSettings");
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-                new Claim("role", roleName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var token = new JwtSecurityToken(
-                issuer: jwtSettings["Issuer"],
-                audience: jwtSettings["Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings["ExpirationInMinutes"])),
-                signingCredentials: credentials
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
     }
 }

@@ -11,6 +11,10 @@ namespace BLL.Interfaces
         Task<bool> UpdatItemLotAdminAsync(Guid id, ItemLotAdminUpdateDTO itemLotDTO);
         Task<bool> DeleteItemLotAsync(Guid id);
         Task<IEnumerable<ItemLotViewDTO>> GetExpiredItemsByDateAsync(DateTime date);
+        Task<IEnumerable<ItemLotViewDTO>> GetItemLotByStorageAsync(int id);
+        Task<IEnumerable<ItemLotViewDTO>> GetByItemIdAsync(Guid itemId);
+        Task<IEnumerable<ItemLotViewDTO>> GetByStorageIdForStaffAsync();
+        Task<IEnumerable<ItemLotViewDTO>> GetLotCreateRequestAsync();
     }
 }
 

@@ -63,9 +63,10 @@ namespace DAL.Repositories.Implementations
             return await _context.ItemLots
                 .Include(il => il.Item)
                 .Include(il => il.Item.ItemCategory)
+                .Include(il => il.Item.User)
                 .Include(il => il.Storage)
                 .Where(il => il.ExpiryDate.Date < date.Date)
-                .Where(il => il.Status == LotStatus.Approved)
+                .Where(il => il.Status == LotStatus.InStorage)
                 .ToListAsync();
         }
 
@@ -74,8 +75,46 @@ namespace DAL.Repositories.Implementations
             return await _context.ItemLots
                 .Include(il => il.Item)
                 .Include(il => il.Item.ItemCategory)
+                .Include(il => il.Item.User)
                 .Include(il => il.Storage)
                 .Where(il => il.StorageId == storageId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ItemLot>> GetByItemIdAsync(Guid itemId)
+        {
+            return await _context.ItemLots
+                .Include(il => il.Item)
+                .Include(il => il.Item.ItemCategory)
+                .Include(il => il.Item.User)
+                .Include(il => il.Storage)
+                .Where(il => il.ItemId == itemId)
+                .ToListAsync();
+
+        }
+
+        public async Task<IEnumerable<ItemLot>> GetByStorageIdForStaffAsync(int storageId)
+        {
+            return await _context.ItemLots
+                .Include(il => il.Item)
+                .Include(il => il.Item.ItemCategory)
+                .Include(il => il.Item.User)
+                .Include(il => il.Storage)
+                .Where(il => il.StorageId == storageId
+                && (il.Status == LotStatus.NeedDisposing
+                || il.Status == LotStatus.Rejected
+                || il.Status == LotStatus.ToBeImport))
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ItemLot>> GetCreateLotRequestAsync()
+        {
+            return await _context.ItemLots
+                .Include(il => il.Item)
+                .Include(il => il.Item.ItemCategory)
+                .Include(il => il.Item.User)
+                .Include(il => il.Storage)
+                .Where(il=>il.Status == LotStatus.Pending)
                 .ToListAsync();
         }
     }

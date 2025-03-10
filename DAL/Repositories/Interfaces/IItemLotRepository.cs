@@ -11,5 +11,8 @@ namespace DAL.Repositories.Interfaces
         Task DeleteAsync(Guid id);
         Task<IEnumerable<ItemLot>> GetExpiredItemsByDateAsync(DateTime date);
         Task<IEnumerable<ItemLot>> GetByStorageIdAsync(int storageId);
+        Task<IEnumerable<ItemLot>> GetByItemIdAsync(Guid itemId);
+        Task<IEnumerable<ItemLot>> GetByStorageIdForStaffAsync(int storageId);
+        Task<IEnumerable<ItemLot>> GetCreateLotRequestAsync();
     }
 }
