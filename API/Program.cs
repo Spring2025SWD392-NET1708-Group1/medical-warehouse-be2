@@ -9,9 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using DAL.Repositories;
 using System.Security.Claims;
-
+using DAL.Repositories;
 
 namespace API
 {
@@ -21,13 +20,12 @@ namespace API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // 🔹 Register Swagger service
-
+            // 🔹 JWT Authentication
             builder.Services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    })
+            })
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -36,12 +34,11 @@ namespace API
                     ValidateAudience = false,
                     ValidateLifetime = false,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey =
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
                 };
             });
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            // 🔹 Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
             {
@@ -58,7 +55,7 @@ namespace API
                     }
                 });
 
-                // 🔹 Enable JWT Authentication in Swagger UI (Optional)
+                // Enable JWT Authentication in Swagger UI
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -81,94 +78,36 @@ namespace API
                         },
                         new string[] {}
                     }
-
-          });
-      });
-
-      // 🔹 Register Authorization Policies
-      builder.Services.AddAuthorization(options =>
-      {
-        options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
-        options.AddPolicy("SupplierPolicy", policy => policy.RequireRole("Supplier"));
-        options.AddPolicy("StaffPolicy", policy => policy.RequireRole("Staff"));
-        options.AddPolicy("CustomerPolicy", policy => policy.RequireRole("Customer"));
-        options.AddPolicy("DeliveryUnitPolicy", policy => policy.RequireRole("DeliveryUnit"));
-      });
-
-
-
-
-      builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
-      //Repository Dependency Injection
-      builder.Services.AddScoped<IItemCategoryRepository, ItemCategoryRepository>();
-      builder.Services.AddScoped<IItemRepository, ItemRepository>();
-      builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
-      builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-      builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-      builder.Services.AddScoped<ISubmissionRepository, SubmissionRepository>();
-      builder.Services.AddScoped<IUserRepository, UserRepository>();
-      builder.Services.AddScoped<ILotRequestRepository, LotRequestRepository>();
-      builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
-
-      //Service Dependency Injection
-      builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
-      builder.Services.AddScoped<IItemService, ItemService>();
-      builder.Services.AddScoped<ILotRequestService, LotRequestService>();
-      builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
-      builder.Services.AddScoped<IOrderService, OrderService>();
-      builder.Services.AddScoped<IRoleService, RoleService>();
-      builder.Services.AddScoped<ISubmissionService, SubmissionService>();
-      builder.Services.AddScoped<IUserService, UserService>();
-      builder.Services.AddScoped<IAuthService, AuthService>();
-      builder.Services.AddScoped<IAdminUserService, AdminUserService>();
-
-
-      var connectionString = (builder.Configuration.GetConnectionString("DefaultConnection"));
-      builder.Services.AddDbContext<AppDbContext>(options =>
-          options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), b => b.MigrationsAssembly("DAL")));
-
-      // 🔹 Add services to the container
-      builder.Services.AddControllers();
-
-      var app = builder.Build();
-
-            // 🔹 Configure the HTTP request pipeline
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Medical Warehouse API v1");
-                    options.RoutePrefix = "swagger"; // Set Swagger UI tại http://localhost:<port>/swagger
                 });
-            }
+            });
 
-
-
-            // 🔹 Register Authorization Policies
+            // 🔹 Authorization Policies
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
                 options.AddPolicy("SupplierPolicy", policy => policy.RequireRole("Supplier"));
                 options.AddPolicy("StaffPolicy", policy => policy.RequireRole("Staff"));
                 options.AddPolicy("CustomerPolicy", policy => policy.RequireRole("Customer"));
+                options.AddPolicy("DeliveryUnitPolicy", policy => policy.RequireRole("DeliveryUnit"));
                 options.AddPolicy("ManagerPolicy", policy => policy.RequireRole("Manager"));
             });
 
-
+            // 🔹 CORS Policy
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowLocalhost",
                     policy =>
                     {
-                        policy.WithOrigins("http://localhost:5173") // Allow requests from this frontend origin
+                        policy.WithOrigins("http://localhost:5173")
                               .AllowAnyHeader()
                               .AllowAnyMethod();
                     });
             });
 
+            // 🔹 AutoMapper
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
-            //Repository Dependency Injection
+
+            // 🔹 Repository Dependency Injection
             builder.Services.AddScoped<IItemCategoryRepository, ItemCategoryRepository>();
             builder.Services.AddScoped<IItemRepository, ItemRepository>();
             builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
@@ -178,8 +117,9 @@ namespace API
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ILotRequestRepository, LotRequestRepository>();
             builder.Services.AddScoped<IStorageRepository, StorageRepository>();
+            builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
 
-            //Service Dependency Injection
+            // 🔹 Service Dependency Injection
             builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
             builder.Services.AddScoped<IItemService, ItemService>();
             builder.Services.AddScoped<ILotRequestService, LotRequestService>();
@@ -191,35 +131,27 @@ namespace API
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<IStorageService, StorageService>();
+            builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 
-            // Calendar picker for query that accepts datetime
-            builder.Services.AddSwaggerGen(c =>
-            {
-                c.MapType<DateTime>(() => new Microsoft.OpenApi.Models.OpenApiSchema
-                {
-                    Type = "string",
-                    Format = "date", // Use "date" so the calendar picker appears
-                    Example = new Microsoft.OpenApi.Any.OpenApiString("12-02-2000")
-                });
-            });
-
-            var connectionString = (builder.Configuration.GetConnectionString("DefaultConnection"));
+            // 🔹 Database Context
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), b => b.MigrationsAssembly("DAL")));
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
+                b => b.MigrationsAssembly("DAL")));
 
-            // 🔹 Add services to the container
+            // 🔹 Add Controllers
             builder.Services.AddControllers();
 
             var app = builder.Build();
 
-            // 🔹 Configure the HTTP request pipeline
+            // 🔹 Configure Middleware
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Medical Warehouse API v1");
-                    options.RoutePrefix = "swagger"; // Set Swagger UI at root (http://localhost:<port>/)
+                    options.RoutePrefix = "swagger";
                 });
             }
 
@@ -230,7 +162,6 @@ namespace API
             app.MapControllers();
 
             app.Run();
-
         }
     }
 }
