@@ -9,7 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using DAL.Repositories;
 using System.Security.Claims;
+
 
 namespace API
 {
@@ -79,6 +81,68 @@ namespace API
                         },
                         new string[] {}
                     }
+
+          });
+      });
+
+      // 🔹 Register Authorization Policies
+      builder.Services.AddAuthorization(options =>
+      {
+        options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+        options.AddPolicy("SupplierPolicy", policy => policy.RequireRole("Supplier"));
+        options.AddPolicy("StaffPolicy", policy => policy.RequireRole("Staff"));
+        options.AddPolicy("CustomerPolicy", policy => policy.RequireRole("Customer"));
+        options.AddPolicy("DeliveryUnitPolicy", policy => policy.RequireRole("DeliveryUnit"));
+      });
+
+
+
+
+      builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+      //Repository Dependency Injection
+      builder.Services.AddScoped<IItemCategoryRepository, ItemCategoryRepository>();
+      builder.Services.AddScoped<IItemRepository, ItemRepository>();
+      builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+      builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+      builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+      builder.Services.AddScoped<ISubmissionRepository, SubmissionRepository>();
+      builder.Services.AddScoped<IUserRepository, UserRepository>();
+      builder.Services.AddScoped<ILotRequestRepository, LotRequestRepository>();
+      builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
+
+      //Service Dependency Injection
+      builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
+      builder.Services.AddScoped<IItemService, ItemService>();
+      builder.Services.AddScoped<ILotRequestService, LotRequestService>();
+      builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
+      builder.Services.AddScoped<IOrderService, OrderService>();
+      builder.Services.AddScoped<IRoleService, RoleService>();
+      builder.Services.AddScoped<ISubmissionService, SubmissionService>();
+      builder.Services.AddScoped<IUserService, UserService>();
+      builder.Services.AddScoped<IAuthService, AuthService>();
+      builder.Services.AddScoped<IAdminUserService, AdminUserService>();
+
+
+      var connectionString = (builder.Configuration.GetConnectionString("DefaultConnection"));
+      builder.Services.AddDbContext<AppDbContext>(options =>
+          options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), b => b.MigrationsAssembly("DAL")));
+
+      // 🔹 Add services to the container
+      builder.Services.AddControllers();
+
+      var app = builder.Build();
+
+      // 🔹 Configure the HTTP request pipeline
+      if (app.Environment.IsDevelopment())
+      {
+        app.UseSwagger();
+        app.UseSwaggerUI(options =>
+        {
+          options.SwaggerEndpoint("/swagger/v1/swagger.json", "Medical Warehouse API v1");
+          options.RoutePrefix = "swagger"; // Set Swagger UI at root (http://localhost:<port>/)
+        });
+      }
+=======
                 });
             });
 
@@ -161,7 +225,6 @@ namespace API
             }
 
             app.UseCors("AllowLocalhost");
-
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
