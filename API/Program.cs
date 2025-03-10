@@ -132,19 +132,18 @@ namespace API
 
       var app = builder.Build();
 
-      // 🔹 Configure the HTTP request pipeline
-      if (app.Environment.IsDevelopment())
-      {
-        app.UseSwagger();
-        app.UseSwaggerUI(options =>
-        {
-          options.SwaggerEndpoint("/swagger/v1/swagger.json", "Medical Warehouse API v1");
-          options.RoutePrefix = "swagger"; // Set Swagger UI at root (http://localhost:<port>/)
-        });
-      }
-=======
+            // 🔹 Configure the HTTP request pipeline
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Medical Warehouse API v1");
+                    options.RoutePrefix = "swagger"; // Set Swagger UI tại http://localhost:<port>/swagger
                 });
-            });
+            }
+
+
 
             // 🔹 Register Authorization Policies
             builder.Services.AddAuthorization(options =>
