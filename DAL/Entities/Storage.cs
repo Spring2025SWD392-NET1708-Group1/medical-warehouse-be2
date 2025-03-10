@@ -1,21 +1,23 @@
 using System.ComponentModel.DataAnnotations;
 namespace DAL.Entities
 {
-  public class Storage
-  {
-    [Key]
-    public int Id { get; set; }
+    public class Storage
+    {
+        [Key]
+        public int Id { get; set; }
 
-    [Required]
-    [MaxLength(2)]
-    public string Name { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string Name { get; set; } = string.Empty;
 
-    [Required]
-    public int StorageCategoryId { get; set; }
+        [Required]
+        public int StorageCategoryId { get; set; }
+        public StorageCategory StorageCategory { get; set; }
 
-    public StorageCategory StorageCategory { get; set; }
+        [Required]
+        public bool IsActive { get; set; } = true;
 
-    [Required]
-    public bool IsActive { get; set; } = true;
-  }
+        // Navigation property for related items
+        //public ICollection<LotRequest> LotRequests { get; set; } = [];
+    }
 }

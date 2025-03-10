@@ -12,9 +12,11 @@ namespace DAL.Entities
         public string PhoneNumber { get; set; } = string.Empty;
         public Guid RoleId { get; set; }
         public bool EmailConfirmed { get; set; }
+        public Guid? ActivationToken { get; set; }
+        public DateTime? ActivationTokenExpires { get; set; }
+
         public Role Role { get; set; } = null!;
         public ICollection<Order> Orders { get; set; } = new List<Order>();
-        // Navigation property: LotRequests (Staff managing them)
         public ICollection<LotRequest> LotRequests { get; set; } = new List<LotRequest>();
     }
 }

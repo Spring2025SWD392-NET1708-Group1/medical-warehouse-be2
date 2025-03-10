@@ -1,13 +1,12 @@
+using BLL.DTOs;
+using BLL.Interfaces;
+using DAL.Repositories.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using DAL.Repositories.Interfaces;
-using BLL.DTOs;
-using BLL.Interfaces;
-using DAL.Configurations;
 namespace BLL.Services
 {
     public class AuthService : IAuthService
@@ -20,7 +19,7 @@ namespace BLL.Services
             _configuration = configuration;
             _userRepository = userRepository;
         }
-        string HashPassword(string password)
+        public string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
@@ -52,8 +51,21 @@ namespace BLL.Services
             {
                 return GenerateJwtToken(user.Id, user.Role.Name);
             }
-
             return null;
+        }
+
+        public async Task ActivateAccountAsync(Guid token)
+        {
+            var user = await _userRepository.GetByActivationTokenAsync(token);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            user.EmailConfirmed = true;
+            user.ActivationToken = null;
+            user.ActivationTokenExpires = null;
+            await _userRepository.UpdateAsync(user);
         }
 
         public string GenerateJwtToken(Guid userId, string roleName)
@@ -65,7 +77,7 @@ namespace BLL.Services
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-                new Claim(ClaimTypes.Role, roleName),
+                new Claim("role", roleName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

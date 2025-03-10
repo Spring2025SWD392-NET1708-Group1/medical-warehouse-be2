@@ -34,15 +34,15 @@ namespace BLL.Services
             return true;
         }
 
-        public async Task<IEnumerable<ItemViewDTO>> GetAllItemsAsync()
+        public async Task<IEnumerable<ItemViewDTO>> GetAllItemsWithDetailsAsync()
         {
-            var items = await _itemRepository.GetAllAsync();
+            var items = await _itemRepository.GetAllWithCategoryAndStorageAsync(); // Fetch related data
             return _mapper.Map<IEnumerable<ItemViewDTO>>(items);
         }
 
-        public async Task<ItemViewDTO?> GetItemByIdAsync(Guid id)
+        public async Task<ItemViewDTO?> GetItemByIdWithDetailsAsync(Guid id)
         {
-            var item = await _itemRepository.GetByIdAsync(id);
+            var item = await _itemRepository.GetByIdWithCategoryAndStorageAsync(id); // Fetch related data
             return item != null ? _mapper.Map<ItemViewDTO>(item) : null;
         }
 
@@ -54,6 +54,12 @@ namespace BLL.Services
             _mapper.Map(itemDTO, item);
             await _itemRepository.UpdateAsync(item);
             return true;
+        }
+
+        public async Task<IEnumerable<LotRequestViewDTO>> GetExpiredItemsByDateAsync(DateTime date)
+        {
+            var items = await _itemRepository.GetExpiredItemsByDateAsync(date);
+            return _mapper.Map<IEnumerable<LotRequestViewDTO>>(items);
         }
     }
 }

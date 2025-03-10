@@ -2,11 +2,6 @@
 using DAL.Entities;
 using DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Repositories.Implementations
 {
@@ -60,6 +55,12 @@ namespace DAL.Repositories.Implementations
             return await _context.Storages
                 .Where(s => s.StorageCategoryId == categoryId)
                 .ToListAsync();
+        }
+
+        public async Task<Storage?> GetStorageByNameAsync(string name)
+        {
+            return await _context.Storages
+                .FirstOrDefaultAsync(s => s.Name == name);
         }
     }
 }

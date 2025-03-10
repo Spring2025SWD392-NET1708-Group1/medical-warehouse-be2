@@ -9,5 +9,6 @@ namespace BLL.Interfaces
         Task<UserViewDTO> CreateUserAsync(UserCreateDTO userDTO);
         Task<bool> UpdateUserAsync(Guid id, UserUpdateDTO userDTO);
         Task<bool> DeleteUserAsync(Guid id);
+        Task<UserViewDTO?> GetUserByEmailAsync(string email);
     }
 }

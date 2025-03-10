@@ -1,9 +1,4 @@
 ﻿using BLL.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
@@ -11,8 +6,9 @@ namespace BLL.Interfaces
     {
         Task<ItemViewDTO> CreateItemAsync(ItemCreateDTO itemDTO);
         Task<bool> DeleteItemAsync(Guid id);
-        Task<IEnumerable<ItemViewDTO>> GetAllItemsAsync();
-        Task<ItemViewDTO?> GetItemByIdAsync(Guid id);
+        Task<IEnumerable<ItemViewDTO>> GetAllItemsWithDetailsAsync(); // Updated method
+        Task<ItemViewDTO?> GetItemByIdWithDetailsAsync(Guid id); // Updated method
         Task<bool> UpdateItemAsync(Guid id, ItemUpdateDTO itemDTO);
+        Task<IEnumerable<LotRequestViewDTO>> GetExpiredItemsByDateAsync(DateTime date);
     }
 }

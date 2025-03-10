@@ -34,6 +34,13 @@ namespace DAL.Repositories.Implementations
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
 
+        public async Task<User?> GetByActivationTokenAsync(Guid token)
+        {
+            return await _context.Users
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.ActivationToken == token);
+        }
+
         public async Task AddAsync(User user)
         {
             await _context.Users.AddAsync(user);

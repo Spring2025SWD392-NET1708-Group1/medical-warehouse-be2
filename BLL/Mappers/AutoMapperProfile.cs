@@ -76,11 +76,15 @@ namespace BLL.Mappers
             CreateMap<LotRequest, LotRequestViewDTO>()
                 .ForMember(dest => dest.Item, opt => opt.MapFrom(src => src.Item))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
-                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.FullName));
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.FullName))
+                .ForMember(dest => dest.StorageName, opt => opt.MapFrom(src => src.Storage.Name));
 
             CreateMap<LotRequestCreateDTO, LotRequest>();
 
             CreateMap<LotRequestUpdateDTO, LotRequest>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<LotRequestAdminUpdateDTO, LotRequest>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             // Storage Mappings

@@ -11,9 +11,11 @@ namespace DAL.Entities
         public Item Item { get; set; }
         public Guid UserId { get; set; }
         public User User { get; set; }
+        public int StorageId { get; set; }
+        public Storage Storage { get; set; }
+        public int Quantity { get; set; }
         public string Quality { get; set; } = string.Empty;
+        public DateTime ExpiryDate { get; set; }
         public LotRequestEnums? Status { get; set; }
-
-
     }
 }

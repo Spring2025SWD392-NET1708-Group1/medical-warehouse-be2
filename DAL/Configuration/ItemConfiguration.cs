@@ -33,9 +33,7 @@ namespace DAL.Configurations
                     Name = "Paracetamol",
                     Description = "Pain reliever",
                     ItemCategoryId = Guid.Parse("aed8c311-739c-4264-83a1-8a5e8854c182"),
-                    Quantity = 100,
-                    Price = 5.00m,
-                    ExpiryDate = new DateTime(2026, 12, 31)
+                    Price = 5.00m
                 },
                 new Item
                 {
@@ -43,9 +41,15 @@ namespace DAL.Configurations
                     Name = "Surgical Gloves",
                     Description = "Disposable gloves",
                     ItemCategoryId = Guid.Parse("b7c51ee8-f942-4492-98b7-877b5777cd21"),
-                    Quantity = 200,
-                    Price = 10.00m,
-                    ExpiryDate = new DateTime(2027, 06, 15)
+                    Price = 10.00m
+                },
+                new Item
+                {
+                    Id = Guid.Parse("3d2a1e6d-b173-4db6-a2b4-1cb8bdfb94c9"),
+                    Name = "Antibiotic Ointment",
+                    Description = "Topical antibiotic treatment",
+                    ItemCategoryId = Guid.Parse("c3e3f7f8-8b32-4a3b-9f6a-45ef9d42a4e1"),
+                    Price = 12.50m
                 }
             );
         }

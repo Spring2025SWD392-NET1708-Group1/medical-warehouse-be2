@@ -1,11 +1,11 @@
 ﻿using BLL.DTOs;
+using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using BLL.Interfaces;
 
 namespace API.Controllers
 {
@@ -17,13 +17,15 @@ namespace API.Controllers
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
         private readonly IAuthService _authService;
+        private readonly IEmailService _emailService;
 
 
-        public AuthController(IUserService userService, IConfiguration configuration, IAuthService authService)
+        public AuthController(IUserService userService, IConfiguration configuration, IAuthService authService, IEmailService emailService)
         {
             _userService = userService;
             _configuration = configuration;
             _authService = authService;
+            _emailService = emailService;
         }
 
         [HttpPost("login")]
@@ -44,13 +46,35 @@ namespace API.Controllers
             }
         }
 
-
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserCreateDTO userDto)
         {
+            var existingUser = await _userService.GetUserByEmailAsync(userDto.Email);
+            if (existingUser != null)
+            {
+                return BadRequest("User with this email already exists.");
+            }
+
             var createdUser = await _userService.CreateUserAsync(userDto);
+            var activationLink = "http://localhost:5090/api/auth/activate?token=" + createdUser.ActivationToken;
+            await _emailService.SendActivationEmailAsync(userDto.Email, activationLink);
             return CreatedAtAction(nameof(Register), new { id = createdUser.Id }, createdUser);
         }
+
+        [HttpGet("activate")]
+        public async Task<IActionResult> ActivateAccount(Guid token)
+        {
+            try
+            {
+                await _authService.ActivateAccountAsync(token);
+                return Ok("Account activated successfully.");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [Authorize(Policy = "AdminPolicy")]
         [HttpGet("test-admin")]
         public IActionResult TestAdmin()

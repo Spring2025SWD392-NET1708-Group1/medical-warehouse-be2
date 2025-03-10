@@ -13,7 +13,7 @@ namespace DAL.Configuration
             builder.Property(sc => sc.Name)
                 .IsRequired()
                 .HasMaxLength(100);
-                
+
             // Seed Data
             builder.HasData(
                 new StorageCategory { Id = 1, Name = "Dry Storage" },
