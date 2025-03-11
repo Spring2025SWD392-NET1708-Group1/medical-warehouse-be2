@@ -33,6 +33,21 @@ namespace DAL.Configurations
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasOne(u => u.Storage)
+                .WithMany(s => s.Users)
+                .HasForeignKey(u => u.StorageId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(u => u.SentSubmissions)
+                .WithOne(s => s.FromUser)
+                .HasForeignKey(s => s.FromUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(u => u.ReceivedSubmissions)
+                .WithOne(s => s.ToUser)
+                .HasForeignKey(s => s.ToUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // Password hashing function using SHA-256
             string HashPassword(string password)
             {
@@ -65,10 +80,20 @@ namespace DAL.Configurations
                 new User
                 {
                     Id = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8f2"),
-                    FullName = "Staff",
+                    FullName = "Staff 1",
                     Email = "staff@example.com",
                     PasswordHash = HashPassword("Staff@123"),
-                    RoleId = Guid.Parse("9c157f3e-d3ac-43b8-93b0-15e3d7f40ec1") // Staff Role
+                    RoleId = Guid.Parse("9c157f3e-d3ac-43b8-93b0-15e3d7f40ec1"), // Staff Role
+                    StorageId = 1
+                },
+                new User
+                {
+                    Id = Guid.Parse("5908232b-11d1-4c80-b330-f3810ed0d4a1"),
+                    FullName = "Staff 2",
+                    Email = "staff2@example.com",
+                    PasswordHash = HashPassword("Staff@123"),
+                    RoleId = Guid.Parse("9c157f3e-d3ac-43b8-93b0-15e3d7f40ec1"), // Staff Role
+                    StorageId = 2
                 },
                 new User
                 {
@@ -81,8 +106,16 @@ namespace DAL.Configurations
                 new User
                 {
                     Id = Guid.Parse("d8f0b849-d1a2-45d5-8a23-47772060c8f4"),
-                    FullName = "Supplier",
+                    FullName = "MedComp inc.",
                     Email = "supplier@example.com",
+                    PasswordHash = HashPassword("Supplier@123"),
+                    RoleId = Guid.Parse("f8a8b1c9-24a1-484e-bb02-95b9601d4047") // Supplier Role
+                },
+                new User
+                {
+                    Id = Guid.Parse("996897c4-ef2b-4099-a9c5-5da1a06e9822"),
+                    FullName = "L Corp.",
+                    Email = "supplier2@example.com",
                     PasswordHash = HashPassword("Supplier@123"),
                     RoleId = Guid.Parse("f8a8b1c9-24a1-484e-bb02-95b9601d4047") // Supplier Role
                 },

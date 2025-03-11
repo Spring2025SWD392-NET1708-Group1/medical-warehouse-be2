@@ -1,4 +1,5 @@
 
+using Common.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace BLL.DTOs
@@ -9,13 +10,20 @@ namespace BLL.DTOs
         public string Name { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
+        [Required]
+        public Guid UserId { get; set; } = Guid.Empty; // Supplier Id
 
         [Required]
         public Guid ItemCategoryId { get; set; } // Category reference for creation
+        [Required]
+        public ItemType ItemType { get; set; }
 
         [Required]
         [Range(0.01, double.MaxValue)]
-        public decimal Price { get; set; }
+        public decimal ImportPricePerUnit { get; set; }
+        [Range(0.01, double.MaxValue)]
+        public decimal? ExportPricePerUnit { get; set; }
+
     }
 
     public class ItemUpdateDTO
@@ -25,9 +33,11 @@ namespace BLL.DTOs
 
         public string? Description { get; set; }
 
-        public Guid? ItemCategoryId { get; set; } // Nullable, so updates can be partial
+        public Guid? ItemCategoryId { get; set; }
 
-        public decimal? Price { get; set; }
+        public decimal? ImportPricePerUnit { get; set; }
+        public decimal? ExporPricePerUnit { get; set; }
+        public bool? IsForSale { get; set; }
     }
 
     public class ItemViewDTO
@@ -35,7 +45,11 @@ namespace BLL.DTOs
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public string CategoryName { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public string SupplierName { get; set; }
+        public string CategoryName { get; set; }
+        public string ItemType { get; set; }
+        public decimal ImportPricePerUnit { get; set; }
+        public decimal ExportPricePerUnit { get; set; }
+        public bool IsForSale { get; set; }
     }
 }

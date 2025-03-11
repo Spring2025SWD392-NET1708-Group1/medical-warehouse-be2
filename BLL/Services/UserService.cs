@@ -1,6 +1,7 @@
 using AutoMapper;
 using BLL.DTOs;
 using BLL.Interfaces;
+using BLL.Utils;
 using DAL.Entities;
 using DAL.Repositories.Interfaces;
 
@@ -42,7 +43,7 @@ namespace BLL.Services
             var userEntity = _mapper.Map<User>(userDTO);
             userEntity.Id = Guid.NewGuid();
             userEntity.ActivationToken = Guid.NewGuid();
-            userEntity.PasswordHash = _authService.HashPassword(userDTO.Password);
+            userEntity.PasswordHash = PasswordUtils.HashPassword(userDTO.Password);
             await _userRepository.AddAsync(userEntity);
             return _mapper.Map<UserViewDTO>(userEntity);
         }

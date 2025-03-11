@@ -1,5 +1,7 @@
 ﻿using Common.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
@@ -9,16 +11,35 @@ namespace DAL.Entities
         public Guid Id { get; set; }
 
         [Required]
-        public Guid UserId { get; set; }
+        public Guid FromUserId { get; set; }
 
-        public User User { get; set; } = null!; // Ensures navigation property is required
+        [ForeignKey("FromUserId")]
+        public User FromUser { get; set; } = null!;
+
+        public Guid? ToUserId { get; set; }
+
+        [ForeignKey("ToUserId")]
+        public User? ToUser { get; set; }
+        [ForeignKey("StorageId")]
+        public int? StorageId { get; set; }
+        public Storage? Storage { get; set; }
 
         [Required]
         public SubmissionType Type { get; set; }
 
         [Required]
-        public string Context { get; set; } = string.Empty; // Default to empty string
+        public string Title { get; set; } = string.Empty;
 
-        public DateTime CreatedDate { get; set; } = DateTime.UtcNow; // Default timestamp
+        [Required]
+        public string Context { get; set; } = string.Empty;
+
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
+        public DateTime? LastModifiedDate { get; set; } 
+
+        public bool? IsTaskDone { get; set; } = null;
+
+        public bool? IsApproved { get; set; } = null;
+
     }
 }

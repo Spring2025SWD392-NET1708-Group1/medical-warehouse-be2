@@ -17,13 +17,14 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<ItemViewDTO> CreateItemAsync(ItemCreateDTO itemDTO)
+        public async Task<Item> CreateItemAsync(ItemCreateDTO itemDTO)
         {
             var item = _mapper.Map<Item>(itemDTO);
             item.Id = Guid.NewGuid();
+            item.IsForSale = false;
 
             await _itemRepository.AddAsync(item);
-            return _mapper.Map<ItemViewDTO>(item);
+            return item;
         }
 
         public async Task<bool> DeleteItemAsync(Guid id)
@@ -54,12 +55,6 @@ namespace BLL.Services
             _mapper.Map(itemDTO, item);
             await _itemRepository.UpdateAsync(item);
             return true;
-        }
-
-        public async Task<IEnumerable<LotRequestViewDTO>> GetExpiredItemsByDateAsync(DateTime date)
-        {
-            var items = await _itemRepository.GetExpiredItemsByDateAsync(date);
-            return _mapper.Map<IEnumerable<LotRequestViewDTO>>(items);
         }
     }
 }

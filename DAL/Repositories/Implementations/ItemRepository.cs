@@ -52,6 +52,7 @@ namespace DAL.Repositories.Implementations
         {
             return await _context.Items
                 .Include(i => i.ItemCategory)
+                .Include(i => i.User)
                 .ToListAsync();
         }
 
@@ -60,20 +61,8 @@ namespace DAL.Repositories.Implementations
         {
             return await _context.Items
                 .Include(i => i.ItemCategory)
+                .Include(i => i.User)
                 .FirstOrDefaultAsync(i => i.Id == id);
-        }
-
-
-        public async Task<IEnumerable<LotRequest>> GetExpiredItemsByDateAsync(DateTime date)
-        {
-            return await _context.LotRequests
-                .Include(lr => lr.Item)
-                .Include(lr => lr.Item.ItemCategory)
-                .Include(lr => lr.Storage)
-                .Include(lr => lr.User)
-                .Where(lr => lr.ExpiryDate.Date < date.Date)
-                .Where(lr => lr.Status == LotRequestEnums.Approved)
-                .ToListAsync();
         }
     }
 }

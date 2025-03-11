@@ -14,6 +14,6 @@ namespace DAL.Repositories.Interfaces
         Task<IEnumerable<Item>> GetAllWithCategoryAndStorageAsync();
         Task<Item?> GetByIdWithCategoryAndStorageAsync(Guid id);
 
-        Task<IEnumerable<LotRequest>> GetExpiredItemsByDateAsync(DateTime date);
+
     }
 }

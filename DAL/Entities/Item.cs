@@ -1,3 +1,4 @@
+using Common.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Entities
@@ -12,6 +13,12 @@ namespace DAL.Entities
         [Required]
         public Guid ItemCategoryId { get; set; }
         public ItemCategory ItemCategory { get; set; }
-        public decimal Price { get; set; }
+        // Define which Supplier offer to supply this Item
+        public Guid UserId { get; set; }
+        public User User { get; set; }
+        public ItemType UnitType { get; set; }
+        public decimal ImportPricePerUnit { get; set; }
+        public decimal? ExportPricePerUnit { get; set; }
+        public bool IsForSale { get; set; }
     }
 }

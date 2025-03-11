@@ -22,6 +22,16 @@ namespace DAL.Configurations
                 .HasForeignKey(s => s.StorageCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasMany(s => s.ItemLots)
+                .WithOne(il => il.Storage)
+                .HasForeignKey(il => il.StorageId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(s => s.Users)
+                .WithOne(u => u.Storage)
+                .HasForeignKey(u => u.StorageId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // Seed Data
             builder.HasData(
                 new Storage { Id = 1, Name = "A1", StorageCategoryId = 1, IsActive = true },

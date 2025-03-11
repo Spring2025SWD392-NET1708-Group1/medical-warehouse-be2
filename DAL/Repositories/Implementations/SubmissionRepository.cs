@@ -16,13 +16,17 @@ namespace DAL.Repositories.Implementations
 
         public async Task<IEnumerable<Submission>> GetAllAsync()
         {
-            return await _context.Submissions.Include(s => s.User).ToListAsync();
+            return await _context.Submissions
+                .Include(s => s.FromUser)
+                .Include(s => s.ToUser)
+                .ToListAsync();
         }
 
         public async Task<Submission?> GetByIdAsync(Guid id)
         {
             return await _context.Submissions
-                .Include(s => s.User)
+                .Include(s => s.FromUser)
+                .Include(s => s.ToUser)
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 

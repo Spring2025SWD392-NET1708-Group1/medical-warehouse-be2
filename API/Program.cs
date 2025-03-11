@@ -10,7 +10,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Security.Claims;
+using BLL.Utils;
 using DAL.Repositories;
+
 
 namespace API
 {
@@ -84,12 +86,13 @@ namespace API
             // 🔹 Authorization Policies
             builder.Services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
-                options.AddPolicy("SupplierPolicy", policy => policy.RequireRole("Supplier"));
-                options.AddPolicy("StaffPolicy", policy => policy.RequireRole("Staff"));
-                options.AddPolicy("CustomerPolicy", policy => policy.RequireRole("Customer"));
-                options.AddPolicy("DeliveryUnitPolicy", policy => policy.RequireRole("DeliveryUnit"));
-                options.AddPolicy("ManagerPolicy", policy => policy.RequireRole("Manager"));
+                options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("Supplier", policy => policy.RequireRole("Supplier"));
+                options.AddPolicy("Staff", policy => policy.RequireRole("Staff"));
+                options.AddPolicy("Customer", policy => policy.RequireRole("Customer"));
+                options.AddPolicy("Manager", policy => policy.RequireRole("Manager"));
+                options.AddPolicy("ManagerOrStaff", policy => policy.RequireRole("Manager", "Staff"));
+
             });
 
             // 🔹 CORS Policy
@@ -115,14 +118,14 @@ namespace API
             builder.Services.AddScoped<IRoleRepository, RoleRepository>();
             builder.Services.AddScoped<ISubmissionRepository, SubmissionRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<ILotRequestRepository, LotRequestRepository>();
+            builder.Services.AddScoped<IItemLotRepository, ItemLotRepository>();
             builder.Services.AddScoped<IStorageRepository, StorageRepository>();
-            builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
+            builder.Services.AddScoped<IStorageCategoryRepository, StorageCategoryRepository>();
 
             // 🔹 Service Dependency Injection
             builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
             builder.Services.AddScoped<IItemService, ItemService>();
-            builder.Services.AddScoped<ILotRequestService, LotRequestService>();
+            builder.Services.AddScoped<IItemLotService, ItemLotService>();
             builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IRoleService, RoleService>();
@@ -131,7 +134,10 @@ namespace API
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<IStorageService, StorageService>();
-            builder.Services.AddScoped<IAdminUserService, AdminUserService>();
+            builder.Services.AddScoped<IStorageCategoryService, StorageCategoryService>();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddScoped<JwtUtils>();
+
 
             // 🔹 Database Context
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
