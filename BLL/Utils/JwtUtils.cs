@@ -49,7 +49,9 @@ namespace BLL.Utils
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim("role", user.Role.Name),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("storageName", user.Storage?.Name ?? string.Empty)
+                new Claim("storageName", user.Storage?.Name ?? string.Empty),
+                new Claim("storageId", user.StorageId.ToString() ?? string.Empty)
+
             };
 
             var token = new JwtSecurityToken(
