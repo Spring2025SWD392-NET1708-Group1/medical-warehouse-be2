@@ -18,6 +18,7 @@ namespace BLL.DTOs
         public string Quality { get; set; } = string.Empty;
         public int Quantity { get; set; }   
         public Guid ItemId { get; set; }
+        public int StorageId { get; set; }
         public DateTime ExpiryDate { get; set; }
     }
 

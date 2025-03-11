@@ -49,7 +49,7 @@ namespace DAL.Repositories.Implementations
                 .Include(il => il.Item)
                 .ThenInclude(i => i.User)
                 .Include(il => il.Storage)
-                .FirstOrDefaultAsync(x => x.ItemLotId == id);
+                .FirstOrDefaultAsync(il => il.ItemLotId == id);
         }
 
         public async Task UpdateAsync(ItemLot lotRequest)
