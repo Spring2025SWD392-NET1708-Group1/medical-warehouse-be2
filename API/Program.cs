@@ -123,6 +123,7 @@ namespace API
             builder.Services.AddScoped<IStorageCategoryRepository, StorageCategoryRepository>();
 
             // 🔹 Service Dependency Injection
+            builder.Services.AddScoped<IAdminUserService, AdminUserService>();
             builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
             builder.Services.AddScoped<IItemService, ItemService>();
             builder.Services.AddScoped<IItemLotService, ItemLotService>();
