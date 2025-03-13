@@ -121,6 +121,7 @@ namespace API
             builder.Services.AddScoped<IItemLotRepository, ItemLotRepository>();
             builder.Services.AddScoped<IStorageRepository, StorageRepository>();
             builder.Services.AddScoped<IStorageCategoryRepository, StorageCategoryRepository>();
+            builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
 
             // 🔹 Service Dependency Injection
             builder.Services.AddScoped<IAdminUserService, AdminUserService>();
