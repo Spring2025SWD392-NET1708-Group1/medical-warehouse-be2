@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using BLL.Interfaces;
 using BLL.DTOs;
-using BLL.Services;
-using DAL.Repositories.Interfaces;
 
 namespace API.Controllers
 {
