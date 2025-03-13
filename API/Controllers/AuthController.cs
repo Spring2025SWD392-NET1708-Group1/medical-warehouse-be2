@@ -75,62 +75,39 @@ namespace API.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminPolicy")]
+        [Authorize(Policy = "Admin")]
         [HttpGet("test-admin")]
         public IActionResult TestAdmin()
         {
             return Ok("You have access to Admin resources!");
         }
 
-        [Authorize(Policy = "SupplierPolicy")]
+        [Authorize(Policy = "Supplier")]
         [HttpGet("test-supplier")]
         public IActionResult TestSupplier()
         {
             return Ok("You have access to Supplier resources!");
         }
 
-        [Authorize(Policy = "StaffPolicy")]
+        [Authorize(Policy = "Staff")]
         [HttpGet("test-staff")]
         public IActionResult TestStaff()
         {
             return Ok("You have access to Staff resources!");
         }
 
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = "Customer")]
         [HttpGet("test-customer")]
         public IActionResult TestCustomer()
         {
             return Ok("You have access to Customer resources!");
         }
 
-        [Authorize(Policy = "DeliveryUnitPolicy")]
+        [Authorize(Policy = "DeliveryUnit")]
         [HttpGet("test-deliveryunit")]
         public IActionResult TestDeliveryUnit()
         {
             return Ok("You have access to Delivery Unit resources!");
-        }
-
-        private string GenerateJwtToken(UserViewDTO user)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.RoleName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                _configuration["Jwt:Issuer"],
-                _configuration["Jwt:Audience"],
-                claims,
-                expires: DateTime.UtcNow.AddHours(2),
-                signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
