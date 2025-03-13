@@ -1,8 +1,5 @@
 ﻿using DAL.Entities;
 using DAL.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using DAL.Context;
 
