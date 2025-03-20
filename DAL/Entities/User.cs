@@ -21,5 +21,6 @@ namespace DAL.Entities
         public ICollection<Item> Items { get; set; } = new List<Item>();
         public ICollection<Submission> SentSubmissions { get; set; } = new List<Submission>();  // FromUser
         public ICollection<Submission> ReceivedSubmissions { get; set; } = new List<Submission>();  // ToUser
+        public ICollection<StockInRequest> StockInRequests { get; set;} = new List<StockInRequest>();
     }
 }

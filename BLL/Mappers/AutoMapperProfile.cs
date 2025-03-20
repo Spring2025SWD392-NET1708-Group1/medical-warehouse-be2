@@ -16,6 +16,7 @@ namespace BLL.Mappers
             CreateMap<Guid?, Guid>().ConvertUsing((src, dest) => src ?? dest);
             CreateMap<DateTime?, DateTime>().ConvertUsing((src, dest) => src ?? dest);
             CreateMap<LotStatus?, LotStatus>().ConvertUsing((src, dest) => src ?? dest);
+            CreateMap<StockInRequestStatus?, StockInRequestStatus>().ConvertUsing((src, dest) => src ?? dest);
 
             // User Mappings
             CreateMap<UserCreateDTO, User>()
@@ -115,6 +116,16 @@ namespace BLL.Mappers
             CreateMap<StorageCategoryCreateDTO, Storage>();
 
             CreateMap<StorageCategoryUpdateDTO, Storage>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<StockInRequest, StockInRequestViewDTO>()
+                .ForMember(dest => dest.RequestStatus, opt => opt.MapFrom(src => src.Status.ToString()))
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.FullName))
+                .ForMember(dest => dest.ItemName, opt => opt.MapFrom(src => src.Item.Name));
+
+            CreateMap<StockInRequestCreateDTO, StockInRequest>();
+
+            CreateMap<StockInRequestUpdateDTO, StockInRequest>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }

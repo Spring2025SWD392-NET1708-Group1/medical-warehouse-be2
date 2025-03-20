@@ -20,6 +20,7 @@ namespace DAL.Context
         public DbSet<ItemLot> ItemLots { get; set; }
         public DbSet<Storage> Storages { get; set; }
         public DbSet<StorageCategory> StorageCategories { get; set; }
+        public DbSet<StockInRequest> StockInRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +35,7 @@ namespace DAL.Context
             modelBuilder.ApplyConfiguration(new ItemLotConfiguration());
             modelBuilder.ApplyConfiguration(new StorageConfiguration());
             modelBuilder.ApplyConfiguration(new StorageCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new StockInRequestConfiguration());
         }
     }
 }

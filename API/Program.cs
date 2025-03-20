@@ -121,6 +121,7 @@ namespace API
             builder.Services.AddScoped<IItemLotRepository, ItemLotRepository>();
             builder.Services.AddScoped<IStorageRepository, StorageRepository>();
             builder.Services.AddScoped<IStorageCategoryRepository, StorageCategoryRepository>();
+            builder.Services.AddScoped<IStockInRequestRepository, StockInRequestRepository>();
 
             // 🔹 Service Dependency Injection
             builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
@@ -135,6 +136,7 @@ namespace API
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<IStorageService, StorageService>();
             builder.Services.AddScoped<IStorageCategoryService, StorageCategoryService>();
+            builder.Services.AddScoped<IStockInRequestService, StockInRequestService>();
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddScoped<JwtUtils>();
 
