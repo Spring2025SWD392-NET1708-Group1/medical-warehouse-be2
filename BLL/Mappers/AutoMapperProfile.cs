@@ -118,6 +118,8 @@ namespace BLL.Mappers
 
             CreateMap<StorageCategoryCreateDTO, StorageCategory>();
 
+            CreateMap<StorageCategoryUpdateDTO, StorageCategory>();
+
             CreateMap<StorageCategoryUpdateDTO, Storage>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
