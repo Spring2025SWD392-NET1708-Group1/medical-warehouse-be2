@@ -38,7 +38,8 @@ namespace API.Controllers
         public async Task<IActionResult> CreateStorageAsync(StorageCreateDTO dto)
         {
             var storage = await _storageService.CreateStorageAsync(dto);
-            return CreatedAtAction(nameof(CreateStorageAsync), storage);
+            //return CreatedAtAction(nameof(GetStorageByIdAsync), new { id = storage.Id} , storage);
+            return Ok(storage);
         }
 
         [HttpPut("{id}")]

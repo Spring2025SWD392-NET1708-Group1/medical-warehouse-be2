@@ -32,7 +32,7 @@ namespace API.Controllers
         public async Task<IActionResult> CreateStorageAsync(StorageCategoryCreateDTO dto)
         {
             var category = await _storageCategoryService.CreateStorageCategoryAsync(dto);
-            return CreatedAtAction(nameof(CreateStorageAsync), category);
+            return Ok(category);
         }
 
         [HttpPut("{id}")]
