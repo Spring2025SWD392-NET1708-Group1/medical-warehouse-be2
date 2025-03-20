@@ -71,9 +71,14 @@ namespace BLL.Services
         {
             var request = await _repository.GetByIdAsync(id);
             if (request == null) return false;
+
+            Console.WriteLine($"Before update - RequestStatus: {request.Status}");
             _mapper.Map(dto, request);
+            Console.WriteLine($"After update - RequestStatus: {request.Status}");
+
             await _repository.UpdateAsync(request);
             return true;
         }
+
     }
 }

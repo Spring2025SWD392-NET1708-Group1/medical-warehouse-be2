@@ -127,10 +127,12 @@ namespace BLL.Mappers
             CreateMap<StockInRequest, StockInRequestViewDTO>()
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.FullName))
                 .ForMember(dest => dest.ItemName, opt => opt.MapFrom(src => src.Item.Name));
+                //.ForMember(dest => dest.RequestStatus, opt => opt.MapFrom(src => src.Status));
 
             CreateMap<StockInRequestCreateDTO, StockInRequest>();
 
             CreateMap<StockInRequestUpdateDTO, StockInRequest>()
+                //.ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.RequestStatus))
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }

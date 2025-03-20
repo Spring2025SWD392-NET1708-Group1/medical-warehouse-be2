@@ -16,7 +16,7 @@ namespace BLL.DTOs
         public decimal ImportPricePerUnit { get; set; }
         public string? Note { get; set; }
         public DateTime ExpiryDate { get; set; }
-        public StockInRequestStatus RequestStatus { get; set; }
+        public StockInRequestStatus Status { get; set; }
         public TransactionStatus PaymentStatus {  get; set; } 
         public DateTime CreatedAt { get; set; }
     } 
@@ -31,7 +31,8 @@ namespace BLL.DTOs
     }
     public class StockInRequestUpdateDTO
     {
-        public StockInRequestStatus? RequestStatus { get; set; }
+        public StockInRequestStatus? Status { get; set; }
+        public TransactionStatus? PaymentStatus { get; set; }
     }
 
 }

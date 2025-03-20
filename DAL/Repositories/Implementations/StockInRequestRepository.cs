@@ -15,13 +15,13 @@ namespace DAL.Repositories.Implementations
 
         public async Task CreateAsync(StockInRequest stockInRequest)
         {
-            await _context.AddAsync(stockInRequest);
+            await _context.StockInRequests.AddAsync(stockInRequest);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(StockInRequest stockInRequest)
         {
-            _context.Remove(stockInRequest);
+            _context.StockInRequests.Remove(stockInRequest);
             await _context.SaveChangesAsync();
         }
 
@@ -52,7 +52,7 @@ namespace DAL.Repositories.Implementations
 
         public async Task UpdateAsync(StockInRequest stockInRequest)
         {
-            _context.Update(stockInRequest);
+            _context.StockInRequests.Update(stockInRequest);
             await _context.SaveChangesAsync();
         }
     }
