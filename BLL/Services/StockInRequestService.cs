@@ -32,6 +32,7 @@ namespace BLL.Services
             request.Id = Guid.NewGuid();
             request.UserId = user.Id;
             request.Status = StockInRequestStatus.Pending;
+            request.PaymentStatus = TransactionStatus.Pending;
             request.CreatedAt = DateTime.UtcNow;
 
             await _repository.CreateAsync(request);

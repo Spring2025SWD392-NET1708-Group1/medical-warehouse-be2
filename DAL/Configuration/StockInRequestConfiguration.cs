@@ -34,17 +34,26 @@ namespace DAL.Configuration
             builder.Property(s => s.Quantity)
                 .IsRequired();
 
+            builder.Property(s => s.ImportPricePerUnit)
+                .IsRequired();
+
             builder.Property(s => s.Note)
-                .IsRequired()
                 .HasMaxLength(255);
 
             builder.Property(s => s.ExpiryDate)
                 .IsRequired();
 
+            builder.Property(s => s.PaymentStatus)
+                .IsRequired();
+
             builder.Property(s => s.Status)
                 .IsRequired();
+
             builder.Property(s => s.CreatedAt)
                 .IsRequired();
+
+            builder.Property(s => s.RejectReason)
+                .HasMaxLength(255);
         }
     }
 }

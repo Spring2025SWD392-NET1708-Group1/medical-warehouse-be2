@@ -17,6 +17,7 @@ namespace DAL.Entities
         public int Quantity { get; set; }
         public string? Note { get; set; }
         public decimal ImportPricePerUnit {  get; set; }
+        public TransactionStatus PaymentStatus { get; set; }
         public DateTime ExpiryDate { get; set; }
         public StockInRequestStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
