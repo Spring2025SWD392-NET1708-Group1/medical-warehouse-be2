@@ -34,7 +34,7 @@ namespace DAL.Configuration
             builder.Property(s => s.Quantity)
                 .IsRequired();
 
-            builder.Property(s => s.Quality)
+            builder.Property(s => s.Note)
                 .IsRequired()
                 .HasMaxLength(255);
 

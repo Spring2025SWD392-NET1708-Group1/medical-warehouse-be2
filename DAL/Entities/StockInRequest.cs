@@ -15,9 +15,11 @@ namespace DAL.Entities
         public Guid ItemId { get; set; }
         public Item Item { get; set; }
         public int Quantity { get; set; }
-        public string Quality { get; set; }
+        public string? Note { get; set; }
+        public decimal ImportPricePerUnit {  get; set; }
         public DateTime ExpiryDate { get; set; }
         public StockInRequestStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string? RejectReason { get; set; }
     }
 }

@@ -9,7 +9,9 @@ namespace Common.Enums
     public enum StockInRequestStatus
     {
         Pending,
+        UnderReview,
         Approved,
+        Completed,
         Rejected,
         Cancelled
     }
