@@ -63,5 +63,29 @@ namespace DAL.Repositories.Implementations
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<User>> GetAllStaffAsync()
+        {
+            return await _context.Users
+                .Include(u => u.Role)
+                .Where(u => u.Role.Name == "Staff")
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<User>> GetStaffByNameAsync(string name)
+        {
+            return await _context.Users
+                .Include(u => u.Role)
+                .Where(u => u.Role.Name == name && u.FullName.Contains(name))
+                .ToListAsync();
+        }
+
+        public async Task<User?> GetStaffByIdAsync(Guid id)
+        {
+            return await _context.Users
+                .Include(u => u.Role)
+                .Where(u => u.Role.Name == "Staff" && u.Id == id)
+                .FirstOrDefaultAsync();
+        }
     }
 }

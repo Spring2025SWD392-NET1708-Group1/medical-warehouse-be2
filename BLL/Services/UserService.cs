@@ -67,5 +67,22 @@ namespace BLL.Services
             return true;
         }
 
+        public async Task<IEnumerable<UserViewDTO>> GetAllStaffAsync()
+        {
+            var staffUsers = await _userRepository.GetAllStaffAsync();
+            return _mapper.Map<IEnumerable<UserViewDTO>>(staffUsers);
+        }
+
+        public async Task<UserViewDTO?> GetStaffByIdAsync(Guid id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            return user != null ? _mapper.Map<UserViewDTO>(user) : null;
+        }
+
+        public async Task<IEnumerable<UserViewDTO>> GetStaffByNameAsync(string name)
+        {
+            var staffUsers = await _userRepository.GetStaffByNameAsync(name);
+            return _mapper.Map<IEnumerable<UserViewDTO>>(staffUsers);
+        }
     }
 }

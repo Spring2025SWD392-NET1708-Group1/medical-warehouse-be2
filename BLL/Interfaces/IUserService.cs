@@ -10,5 +10,8 @@ namespace BLL.Interfaces
         Task<bool> UpdateUserAsync(Guid id, UserUpdateDTO userDTO);
         Task<bool> DeleteUserAsync(Guid id);
         Task<UserViewDTO?> GetUserByEmailAsync(string email);
+        Task<IEnumerable<UserViewDTO>> GetAllStaffAsync();
+        Task<UserViewDTO?> GetStaffByIdAsync(Guid id);
+        Task<IEnumerable<UserViewDTO>> GetStaffByNameAsync(string name);
     }
 }

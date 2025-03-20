@@ -36,7 +36,7 @@ namespace DAL.Configurations
                 new ItemLot
                 {
                     ItemLotId = Guid.Parse("f4e4b2a5-3f2c-4b6a-9d6e-73e3c98f5291"),
-                    Quality = "Good",
+                    Quality = Quality.Good,
                     ItemId = Guid.Parse("80c0ac22-9f4d-478e-8fe1-f01b4e6727b0"), // Paracetamol
                     Status = LotStatus.Pending,
                     StorageId = 1,
@@ -46,7 +46,7 @@ namespace DAL.Configurations
                 new ItemLot
                 {
                     ItemLotId = Guid.Parse("bd3a6eb2-df79-4f52-9a06-8d5d7f1b1e29"),
-                    Quality = "Excellent",
+                    Quality = Quality.Good,
                     ItemId = Guid.Parse("1bfe3b07-5419-4718-bed9-0439016c7f78"), // Surgical Gloves
                     Status = LotStatus.InStorage,
                     StorageId = 2,

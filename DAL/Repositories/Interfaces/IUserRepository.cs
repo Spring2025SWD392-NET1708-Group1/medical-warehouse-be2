@@ -11,5 +11,10 @@ namespace DAL.Repositories.Interfaces
         Task UpdateAsync(User user);
         Task DeleteAsync(Guid id);
         Task<User?> GetByActivationTokenAsync(Guid token);
+        Task<IEnumerable<User>> GetAllStaffAsync();
+        Task<IEnumerable<User>> GetStaffByNameAsync(string name);
+        Task<User?> GetStaffByIdAsync(Guid id);
+
+
     }
 }
