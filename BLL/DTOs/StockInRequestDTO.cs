@@ -19,6 +19,7 @@ namespace BLL.DTOs
         public StockInRequestStatus Status { get; set; }
         public TransactionStatus PaymentStatus {  get; set; } 
         public DateTime CreatedAt { get; set; }
+        public string? RejectReason { get; set; }
     } 
 
     public class StockInRequestCreateDTO
@@ -33,6 +34,7 @@ namespace BLL.DTOs
     {
         public StockInRequestStatus? Status { get; set; }
         public TransactionStatus? PaymentStatus { get; set; }
+        public string? RejectReason { get; set; }
     }
 
 }
