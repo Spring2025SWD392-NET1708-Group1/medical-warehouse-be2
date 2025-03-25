@@ -1,9 +1,9 @@
 using AutoMapper;
-using BLL.DTOs;
+using Common.DTOs;
 using Common.Enums;
 using DAL.Entities;
 
-namespace BLL.Mappers
+namespace Common.Mappers
 {
     public class AutoMapperProfile : Profile
     {

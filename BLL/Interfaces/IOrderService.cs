@@ -1,6 +1,6 @@
-using BLL.DTOs;
+using Common.DTOs;
 
-namespace BLL.Interfaces
+namespace Common.Interfaces
 {
     public interface IOrderService
     {

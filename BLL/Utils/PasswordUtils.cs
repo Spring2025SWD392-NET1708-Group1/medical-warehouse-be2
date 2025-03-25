@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Utils
+namespace Common.Utils
 {
     public static class PasswordUtils
     {

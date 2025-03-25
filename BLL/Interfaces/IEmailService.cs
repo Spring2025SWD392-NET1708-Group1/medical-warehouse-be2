@@ -1,4 +1,4 @@
-﻿namespace BLL.Interfaces
+﻿namespace Common.Interfaces
 {
     public interface IEmailService
     {

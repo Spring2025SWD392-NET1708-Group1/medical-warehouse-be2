@@ -1,6 +1,6 @@
-using BLL.Interfaces;
-using BLL.Mappers;
-using BLL.Services;
+using Common.Interfaces;
+using Common.Mappers;
+using Common.Services;
 using DAL.Context;
 using DAL.Repositories.Implementations;
 using DAL.Repositories.Interfaces;
@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Security.Claims;
-using BLL.Utils;
+using Common.Utils;
 using DAL.Repositories;
 
 

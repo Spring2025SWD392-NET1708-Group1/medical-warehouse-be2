@@ -1,6 +1,6 @@
 ﻿using Common.Enums;
 
-namespace BLL.DTOs
+namespace Common.DTOs
 {
     public class ItemLotViewDTO
     {

@@ -1,5 +1,5 @@
-using BLL.DTOs;
-namespace BLL.Interfaces
+using Common.DTOs;
+namespace Common.Interfaces
 {
     public interface IAuthService
     {

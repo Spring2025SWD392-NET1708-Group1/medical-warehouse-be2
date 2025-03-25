@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using BLL.DTOs;
-using BLL.Interfaces;
-using BLL.Utils;
+using Common.DTOs;
+using Common.Interfaces;
+using Common.Utils;
 using Common.Enums;
 using DAL.Entities;
 using DAL.Repositories.Interfaces;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Services
+namespace Common.Services
 {
     public class StockInRequestService : IStockInRequestService
     {

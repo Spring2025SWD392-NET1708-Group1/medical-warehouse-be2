@@ -1,4 +1,4 @@
-﻿using BLL.DTOs;
+﻿using Common.DTOs;
 using DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Interfaces
+namespace Common.Interfaces
 {
     public interface IStockInRequestService
     {

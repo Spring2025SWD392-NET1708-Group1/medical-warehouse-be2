@@ -1,7 +1,7 @@
-﻿using BLL.DTOs;
-using BLL.Interfaces;
-using BLL.Services;
-using BLL.Utils;
+﻿using Common.DTOs;
+using Common.Interfaces;
+using Common.Services;
+using Common.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

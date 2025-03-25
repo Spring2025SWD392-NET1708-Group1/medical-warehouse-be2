@@ -1,4 +1,4 @@
-﻿namespace BLL.DTOs
+﻿namespace Common.DTOs
 {
     public class EmailSettings
     {
