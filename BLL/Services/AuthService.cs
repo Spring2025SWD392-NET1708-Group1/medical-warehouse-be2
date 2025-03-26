@@ -1,6 +1,6 @@
-using BLL.DTOs;
-using BLL.Interfaces;
-using BLL.Utils;
+using Common.DTOs;
+using Common.Interfaces;
+using Common.Utils;
 using DAL.Repositories.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -9,7 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-namespace BLL.Services
+namespace Common.Services
 {
     public class AuthService : IAuthService
     {

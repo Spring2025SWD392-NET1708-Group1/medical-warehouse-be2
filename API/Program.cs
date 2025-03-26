@@ -1,6 +1,6 @@
-using BLL.Interfaces;
-using BLL.Mappers;
-using BLL.Services;
+using Common.Interfaces;
+using Common.Mappers;
+using Common.Services;
 using DAL.Context;
 using DAL.Repositories.Implementations;
 using DAL.Repositories.Interfaces;
@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Security.Claims;
-using BLL.Utils;
+using Common.Utils;
 using DAL.Repositories;
 
 
@@ -121,6 +121,7 @@ namespace API
             builder.Services.AddScoped<IItemLotRepository, ItemLotRepository>();
             builder.Services.AddScoped<IStorageRepository, StorageRepository>();
             builder.Services.AddScoped<IStorageCategoryRepository, StorageCategoryRepository>();
+            builder.Services.AddScoped<IStockInRequestRepository, StockInRequestRepository>();
 
             // 🔹 Service Dependency Injection
             builder.Services.AddScoped<IItemCategoryService, ItemCategoryService>();
@@ -135,6 +136,7 @@ namespace API
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<IStorageService, StorageService>();
             builder.Services.AddScoped<IStorageCategoryService, StorageCategoryService>();
+            builder.Services.AddScoped<IStockInRequestService, StockInRequestService>();
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddScoped<JwtUtils>();
 

@@ -1,11 +1,11 @@
 using AutoMapper;
-using BLL.DTOs;
-using BLL.Interfaces;
-using BLL.Utils;
+using Common.DTOs;
+using Common.Interfaces;
+using Common.Utils;
 using DAL.Entities;
 using DAL.Repositories.Interfaces;
 
-namespace BLL.Services
+namespace Common.Services
 {
     public class UserService : IUserService
     {

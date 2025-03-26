@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BLL.DTOs
+namespace Common.DTOs
 {
     public class UserCreateDTO
     {

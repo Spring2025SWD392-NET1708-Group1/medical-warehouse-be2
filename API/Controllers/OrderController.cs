@@ -1,5 +1,5 @@
-﻿using BLL.DTOs;
-using BLL.Interfaces;
+﻿using Common.DTOs;
+using Common.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

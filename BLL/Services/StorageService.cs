@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using BLL.DTOs;
-using BLL.Interfaces;
+using Common.DTOs;
+using Common.Interfaces;
 using DAL.Entities;
 using DAL.Repositories.Interfaces;
 
-namespace BLL.Services
+namespace Common.Services
 {
     public class StorageService : IStorageService
     {

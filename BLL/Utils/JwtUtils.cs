@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Utils
+namespace Common.Utils
 {
     public class JwtUtils
     {

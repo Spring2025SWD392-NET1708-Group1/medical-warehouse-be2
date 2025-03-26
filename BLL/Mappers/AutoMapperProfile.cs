@@ -1,9 +1,9 @@
 using AutoMapper;
-using BLL.DTOs;
+using Common.DTOs;
 using Common.Enums;
 using DAL.Entities;
 
-namespace BLL.Mappers
+namespace Common.Mappers
 {
     public class AutoMapperProfile : Profile
     {
@@ -16,6 +16,7 @@ namespace BLL.Mappers
             CreateMap<Guid?, Guid>().ConvertUsing((src, dest) => src ?? dest);
             CreateMap<DateTime?, DateTime>().ConvertUsing((src, dest) => src ?? dest);
             CreateMap<LotStatus?, LotStatus>().ConvertUsing((src, dest) => src ?? dest);
+            CreateMap<StockInRequestStatus?, StockInRequestStatus>().ConvertUsing((src, dest) => src ?? dest);
 
             // User Mappings
             CreateMap<UserCreateDTO, User>()
@@ -121,6 +122,17 @@ namespace BLL.Mappers
             CreateMap<StorageCategoryUpdateDTO, StorageCategory>();
 
             CreateMap<StorageCategoryUpdateDTO, Storage>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<StockInRequest, StockInRequestViewDTO>()
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.FullName))
+                .ForMember(dest => dest.ItemName, opt => opt.MapFrom(src => src.Item.Name));
+                //.ForMember(dest => dest.RequestStatus, opt => opt.MapFrom(src => src.Status));
+
+            CreateMap<StockInRequestCreateDTO, StockInRequest>();
+
+            CreateMap<StockInRequestUpdateDTO, StockInRequest>()
+                //.ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.RequestStatus))
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }

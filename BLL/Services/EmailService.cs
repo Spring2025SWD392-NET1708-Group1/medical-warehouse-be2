@@ -1,11 +1,11 @@
-﻿using BLL.DTOs;
-using BLL.Interfaces;
+﻿using Common.DTOs;
+using Common.Interfaces;
 using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
 
-namespace BLL.Services
+namespace Common.Services
 {
   public class EmailService : IEmailService
   {

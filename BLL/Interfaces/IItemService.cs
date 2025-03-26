@@ -1,7 +1,7 @@
-﻿using BLL.DTOs;
+﻿using Common.DTOs;
 using DAL.Entities;
 
-namespace BLL.Interfaces
+namespace Common.Interfaces
 {
     public interface IItemService
     {

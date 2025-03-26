@@ -2,7 +2,7 @@
 using Common.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace BLL.DTOs
+namespace Common.DTOs
 {
     public class ItemCreateDTO
     {
@@ -28,7 +28,6 @@ namespace BLL.DTOs
 
     public class ItemUpdateDTO
     {
-        [Required]
         public string? Name { get; set; }
 
         public string? Description { get; set; }
